@@ -53,6 +53,7 @@ fun CourseWorkApp() {
             "ticket" -> TicketApp()
             "route_station" -> RouteStationApp()
             "station" -> StationApp()
+            "About project" -> AboutApp()
         }
     }
 }

@@ -39,4 +39,7 @@
     <string name="no">No</string>
     <string name="save_action">Save</string>
     <string name="yes">Yes</string>
+    <string name="about_title">About project</string>
+    <string name="about_info">Курсова робота з баз даних \nТема: Продаж залізничних квитків \nВиконав: Камчатний Владислав \nГрупа: ІС-11 \nПеревірив: Попенко В. Д. \nОцінка
+    </string>
 </resources>

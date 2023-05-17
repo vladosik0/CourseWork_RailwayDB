@@ -97,5 +97,12 @@ fun TopAppBarDropdownMenu(screenContent: MutableState<String>) {
         }) {
             Text(stringResource(id = R.string.wagon_title))
         }
+        Divider()
+        DropdownMenuItem(onClick = {
+            expanded.value = false
+            screenContent.value = "About project"
+        }) {
+            Text(stringResource(id = R.string.about_title))
+        }
     }
 }
