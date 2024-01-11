@@ -20,7 +20,7 @@ fun CourseWorkApp() {
     when (screenContent.value) {
         "train" -> TrainApp(screenContent)
         "train_route" -> TrainRouteApp(screenContent)
-        "seat" -> SeatApp()
+        "seat" -> SeatApp(screenContent)
         "wagon" -> WagonApp(screenContent)
         "ticket" -> TicketApp(screenContent)
         "route_station" -> RouteStationApp()

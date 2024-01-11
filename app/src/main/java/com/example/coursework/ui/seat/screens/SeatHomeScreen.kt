@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -22,6 +23,8 @@ import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.seat.viewModels.SeatHomeViewModel
 import com.example.coursework.R
+import com.example.coursework.ui.CourseWorkTopAppBar
+import com.example.coursework.ui.train.screens.TrainHomeDestination
 
 object SeatHomeDestination : NavigationDestination {
     override val route = "seat_home"
@@ -33,6 +36,7 @@ object SeatHomeDestination : NavigationDestination {
  */
 @Composable
 fun SeatHomeScreen(
+    screenContent: MutableState<String>,
     navigateToSeatInput: () -> Unit,
     navigateToSeatUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -52,6 +56,13 @@ fun SeatHomeScreen(
                 )
             }
         },
+        topBar = {
+            CourseWorkTopAppBar(
+                screenContent = screenContent,
+                title = stringResource(TrainHomeDestination.titleRes),
+                canNavigateBack = false
+            )
+        }
     ) { innerPadding ->
         SeatHomeBody(
             seatList = homeUiState.seatList,
@@ -100,7 +111,6 @@ private fun SeatList(
 }
 
 
-
 @Composable
 private fun SeatItem(
     seat: Seat,
@@ -108,29 +118,28 @@ private fun SeatItem(
     modifier: Modifier = Modifier
 ) {
 
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .clickable { onSeatClick(seat) }
-                .padding(8.dp),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = stringResource(id = R.string.id_title) + ": " + seat.id.toString(),
-                modifier = Modifier.padding(4.dp),
-                color = Color.Black, textAlign = TextAlign.Center
-            )
-            Text(
-                text = stringResource(id = R.string.seat_seat_number_title) + ": " + seat.seatNumber.toString(),
-                modifier = Modifier.padding(4.dp),
-                color = Color.Black, textAlign = TextAlign.Center
-            )
-            Text(
-                text = stringResource(id = R.string.seat_wagon_id_title) + ": " + seat.wagonId.toString(),
-                modifier = Modifier.padding(4.dp),
-                color = Color.Black, textAlign = TextAlign.Center
-            )
-        }
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { onSeatClick(seat) }
+            .padding(8.dp),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = stringResource(id = R.string.id_title) + ": " + seat.id.toString(),
+            modifier = Modifier.padding(4.dp),
+            color = Color.Black, textAlign = TextAlign.Center
+        )
+        Text(
+            text = stringResource(id = R.string.seat_seat_number_title) + ": " + seat.seatNumber.toString(),
+            modifier = Modifier.padding(4.dp),
+            color = Color.Black, textAlign = TextAlign.Center
+        )
+        Text(
+            text = stringResource(id = R.string.seat_wagon_id_title) + ": " + seat.wagonId.toString(),
+            modifier = Modifier.padding(4.dp),
+            color = Color.Black, textAlign = TextAlign.Center
+        )
+    }
 }
-

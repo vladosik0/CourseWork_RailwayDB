@@ -14,10 +14,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
-import com.example.coursework.ui.seat.SeatTopAppBar
 import com.example.coursework.ui.seat.viewModels.SeatDetailsViewModel
 import com.example.coursework.ui.state.SeatUiState
 import com.example.coursework.R
+import com.example.coursework.ui.CourseWorkTopAppBar
 import kotlinx.coroutines.launch
 
 object SeatDetailsDestination : NavigationDestination {
@@ -29,6 +29,7 @@ object SeatDetailsDestination : NavigationDestination {
 
 @Composable
 fun SeatDetailsScreen(
+    screenContent: MutableState<String>,
     navigateToEditSeat: (Int) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -38,7 +39,8 @@ fun SeatDetailsScreen(
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            SeatTopAppBar(
+            CourseWorkTopAppBar(
+                screenContent = screenContent,
                 title = stringResource(SeatDetailsDestination.titleRes),
                 canNavigateBack = true,
                 navigateUp = navigateBack
