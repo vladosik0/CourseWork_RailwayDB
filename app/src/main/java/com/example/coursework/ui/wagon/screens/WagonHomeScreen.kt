@@ -24,7 +24,6 @@ import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.wagon.viewModels.WagonHomeViewModel
 import com.example.coursework.R
 import com.example.coursework.ui.CourseWorkTopAppBar
-import com.example.coursework.ui.train.screens.TrainHomeDestination
 
 object WagonHomeDestination : NavigationDestination {
     override val route = "wagon_home"
@@ -59,7 +58,7 @@ fun WagonHomeScreen(
         topBar = {
             CourseWorkTopAppBar(
                 screenContent = screenContent,
-                title = stringResource(TrainHomeDestination.titleRes),
+                title = stringResource(WagonHomeDestination.titleRes),
                 canNavigateBack = false
             )
         }

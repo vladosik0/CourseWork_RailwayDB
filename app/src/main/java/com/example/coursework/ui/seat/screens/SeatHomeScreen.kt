@@ -24,7 +24,6 @@ import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.seat.viewModels.SeatHomeViewModel
 import com.example.coursework.R
 import com.example.coursework.ui.CourseWorkTopAppBar
-import com.example.coursework.ui.train.screens.TrainHomeDestination
 
 object SeatHomeDestination : NavigationDestination {
     override val route = "seat_home"
@@ -59,7 +58,7 @@ fun SeatHomeScreen(
         topBar = {
             CourseWorkTopAppBar(
                 screenContent = screenContent,
-                title = stringResource(TrainHomeDestination.titleRes),
+                title = stringResource(SeatHomeDestination.titleRes),
                 canNavigateBack = false
             )
         }

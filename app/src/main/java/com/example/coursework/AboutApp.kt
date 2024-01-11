@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coursework.ui.CourseWorkTopAppBar
-import com.example.coursework.ui.train.screens.TrainHomeDestination
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -24,7 +23,7 @@ fun AboutApp(screenContent: MutableState<String>) {
         topBar = {
             CourseWorkTopAppBar(
                 screenContent = screenContent,
-                title = stringResource(TrainHomeDestination.titleRes),
+                title = stringResource(R.string.about_title),
                 canNavigateBack = false
             )
         }
