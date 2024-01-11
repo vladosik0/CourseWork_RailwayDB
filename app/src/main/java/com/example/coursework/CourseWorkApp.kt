@@ -25,6 +25,6 @@ fun CourseWorkApp() {
         "ticket" -> TicketApp(screenContent)
         "route_station" -> RouteStationApp(screenContent)
         "station" -> StationApp(screenContent)
-        "About project" -> AboutApp()
+        "About project" -> AboutApp(screenContent)
     }
 }
