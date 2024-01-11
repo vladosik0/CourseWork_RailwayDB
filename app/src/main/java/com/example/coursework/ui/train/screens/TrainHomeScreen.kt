@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -22,6 +23,7 @@ import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.train.viewModels.TrainHomeViewModel
 import com.example.coursework.R
+import com.example.coursework.ui.train.TrainTopAppBar
 
 object TrainHomeDestination : NavigationDestination {
     override val route = "train_home"
@@ -33,6 +35,7 @@ object TrainHomeDestination : NavigationDestination {
  */
 @Composable
 fun TrainHomeScreen(
+    screenContent: MutableState<String>,
     navigateToTrainInput: () -> Unit,
     navigateToTrainUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -52,6 +55,13 @@ fun TrainHomeScreen(
                 )
             }
         },
+        topBar = {
+            TrainTopAppBar(
+                screenContent = screenContent,
+                title = stringResource(TrainHomeDestination.titleRes),
+                canNavigateBack = false
+            )
+        }
     ) { innerPadding ->
         TrainHomeBody(
             trainList = homeUiState.trainList,

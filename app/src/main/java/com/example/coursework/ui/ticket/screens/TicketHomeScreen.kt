@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -22,6 +23,8 @@ import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.ticket.viewModels.TicketHomeViewModel
 import com.example.coursework.R
+import com.example.coursework.ui.ticket.TicketTopAppBar
+import com.example.coursework.ui.train.screens.TrainHomeDestination
 
 object TicketHomeDestination : NavigationDestination {
     override val route = "ticket_home"
@@ -33,6 +36,7 @@ object TicketHomeDestination : NavigationDestination {
  */
 @Composable
 fun TicketHomeScreen(
+    screenContent: MutableState<String>,
     navigateToTicketInput: () -> Unit,
     navigateToTicketUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -52,6 +56,13 @@ fun TicketHomeScreen(
                 )
             }
         },
+        topBar = {
+            TicketTopAppBar(
+                screenContent = screenContent,
+                title = stringResource(TrainHomeDestination.titleRes),
+                canNavigateBack = false
+            )
+        }
     ) { innerPadding ->
         TicketHomeBody(
             ticketList = homeUiState.ticketList,
@@ -91,7 +102,7 @@ private fun TicketList(
     modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        items(items = ticketList, key = {it.id}){ item->
+        items(items = ticketList, key = { it.id }) { item ->
             Card(modifier = Modifier.padding(8.dp), elevation = 6.dp) {
                 TicketItem(ticket = item, onTicketClick = onTicketClick)
             }
@@ -99,7 +110,6 @@ private fun TicketList(
         }
     }
 }
-
 
 
 @Composable

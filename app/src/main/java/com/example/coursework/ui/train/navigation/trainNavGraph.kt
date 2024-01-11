@@ -1,6 +1,7 @@
 package com.example.coursework.ui.train.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -14,6 +15,7 @@ import com.example.coursework.ui.train.screens.*
  */
 @Composable
 fun TrainNavHost(
+    screenContent: MutableState<String>,
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
@@ -24,6 +26,7 @@ fun TrainNavHost(
     ) {
         composable(route = TrainHomeDestination.route) {
             TrainHomeScreen(
+                screenContent = screenContent,
                 navigateToTrainInput = { navController.navigate(TrainInputDestination.route) },
                 navigateToTrainUpdate = {
                     navController.navigate("${TrainDetailsDestination.route}/${it}")
@@ -32,6 +35,7 @@ fun TrainNavHost(
         }
         composable(route = TrainInputDestination.route) {
             TrainInputScreen(
+                screenContent = screenContent,
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
             )
@@ -43,6 +47,7 @@ fun TrainNavHost(
             })
         ) {
             TrainDetailsScreen(
+                screenContent = screenContent,
                 navigateToEditTrain = { navController.navigate("${TrainEditDestination.route}/$it") },
                 navigateBack = { navController.navigateUp() }
             )
@@ -54,6 +59,7 @@ fun TrainNavHost(
             })
         ) {
             TrainEditScreen(
+                screenContent = screenContent,
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
             )

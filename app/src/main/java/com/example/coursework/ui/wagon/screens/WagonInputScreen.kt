@@ -9,6 +9,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -17,9 +18,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.state.WagonUiState
-import com.example.coursework.ui.wagon.WagonTopAppBar
 import com.example.coursework.ui.wagon.viewModels.WagonInputViewModel
 import com.example.coursework.R
+import com.example.coursework.ui.CourseWorkTopAppBar
 import kotlinx.coroutines.launch
 
 object WagonInputDestination : NavigationDestination {
@@ -29,6 +30,7 @@ object WagonInputDestination : NavigationDestination {
 
 @Composable
 fun WagonInputScreen(
+    screenContent: MutableState<String>,
     navigateBack: () -> Unit,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
@@ -38,7 +40,8 @@ fun WagonInputScreen(
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            WagonTopAppBar(
+            CourseWorkTopAppBar(
+                screenContent = screenContent,
                 title = stringResource(WagonInputDestination.titleRes),
                 canNavigateBack = canNavigateBack,
                 navigateUp = onNavigateUp

@@ -1,6 +1,7 @@
 package com.example.coursework.ui.wagon.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -14,6 +15,7 @@ import com.example.coursework.ui.wagon.screens.*
  */
 @Composable
 fun WagonNavHost(
+    screenContent: MutableState<String>,
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
@@ -24,6 +26,7 @@ fun WagonNavHost(
     ) {
         composable(route = WagonHomeDestination.route) {
             WagonHomeScreen(
+                screenContent = screenContent,
                 navigateToWagonInput = { navController.navigate(WagonInputDestination.route) },
                 navigateToWagonUpdate = {
                     navController.navigate("${WagonDetailsDestination.route}/${it}")
@@ -32,6 +35,7 @@ fun WagonNavHost(
         }
         composable(route = WagonInputDestination.route) {
             WagonInputScreen(
+                screenContent = screenContent,
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
             )
@@ -43,6 +47,7 @@ fun WagonNavHost(
             })
         ) {
             WagonDetailsScreen(
+                screenContent = screenContent,
                 navigateToEditWagon = { navController.navigate("${WagonEditDestination.route}/$it") },
                 navigateBack = { navController.navigateUp() }
             )
@@ -54,6 +59,7 @@ fun WagonNavHost(
             })
         ) {
             WagonEditScreen(
+                screenContent = screenContent,
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
             )

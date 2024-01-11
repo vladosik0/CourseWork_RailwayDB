@@ -3,6 +3,7 @@ package com.example.coursework.ui.ticket.screens
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,6 +24,7 @@ object TicketEditDestination : NavigationDestination {
 
 @Composable
 fun TicketEditScreen(
+    screenContent: MutableState<String>,
     navigateBack: () -> Unit,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
@@ -32,6 +34,7 @@ fun TicketEditScreen(
     Scaffold(
         topBar = {
             TicketTopAppBar(
+                screenContent = screenContent,
                 title = stringResource(TicketEditDestination.titleRes),
                 canNavigateBack = true,
                 navigateUp = onNavigateUp

@@ -15,9 +15,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.state.WagonUiState
-import com.example.coursework.ui.wagon.WagonTopAppBar
 import com.example.coursework.ui.wagon.viewModels.WagonDetailsViewModel
 import com.example.coursework.R
+import com.example.coursework.ui.CourseWorkTopAppBar
 import kotlinx.coroutines.launch
 
 object WagonDetailsDestination : NavigationDestination {
@@ -29,6 +29,7 @@ object WagonDetailsDestination : NavigationDestination {
 
 @Composable
 fun WagonDetailsScreen(
+    screenContent: MutableState<String>,
     navigateToEditWagon: (Int) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -38,7 +39,8 @@ fun WagonDetailsScreen(
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            WagonTopAppBar(
+            CourseWorkTopAppBar(
+                screenContent = screenContent,
                 title = stringResource(WagonDetailsDestination.titleRes),
                 canNavigateBack = true,
                 navigateUp = navigateBack

@@ -19,7 +19,6 @@ import com.example.coursework.R
 @Composable
 fun TopAppBarDropdownMenu(screenContent: MutableState<String>) {
     val expanded = remember { mutableStateOf(false) }
-
     Box(
         Modifier
             .wrapContentSize(Alignment.TopEnd)

@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -22,6 +23,8 @@ import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.wagon.viewModels.WagonHomeViewModel
 import com.example.coursework.R
+import com.example.coursework.ui.CourseWorkTopAppBar
+import com.example.coursework.ui.train.screens.TrainHomeDestination
 
 object WagonHomeDestination : NavigationDestination {
     override val route = "wagon_home"
@@ -33,6 +36,7 @@ object WagonHomeDestination : NavigationDestination {
  */
 @Composable
 fun WagonHomeScreen(
+    screenContent: MutableState<String>,
     navigateToWagonInput: () -> Unit,
     navigateToWagonUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -52,6 +56,13 @@ fun WagonHomeScreen(
                 )
             }
         },
+        topBar = {
+            CourseWorkTopAppBar(
+                screenContent = screenContent,
+                title = stringResource(TrainHomeDestination.titleRes),
+                canNavigateBack = false
+            )
+        }
     ) { innerPadding ->
         WagonHomeBody(
             wagonList = homeUiState.wagonList,
