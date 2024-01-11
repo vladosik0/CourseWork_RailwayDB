@@ -15,9 +15,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.state.StationUiState
-import com.example.coursework.ui.station.StationTopAppBar
 import com.example.coursework.ui.station.viewModels.StationDetailsViewModel
 import com.example.coursework.R
+import com.example.coursework.ui.CourseWorkTopAppBar
 import kotlinx.coroutines.launch
 
 object StationDetailsDestination : NavigationDestination {
@@ -29,6 +29,7 @@ object StationDetailsDestination : NavigationDestination {
 
 @Composable
 fun StationDetailsScreen(
+    screenContent: MutableState<String>,
     navigateToEditStation: (Int) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -38,7 +39,8 @@ fun StationDetailsScreen(
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            StationTopAppBar(
+            CourseWorkTopAppBar(
+                screenContent = screenContent,
                 title = stringResource(StationDetailsDestination.titleRes),
                 canNavigateBack = true,
                 navigateUp = navigateBack
