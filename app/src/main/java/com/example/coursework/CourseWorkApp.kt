@@ -23,7 +23,7 @@ fun CourseWorkApp() {
         "seat" -> SeatApp(screenContent)
         "wagon" -> WagonApp(screenContent)
         "ticket" -> TicketApp(screenContent)
-        "route_station" -> RouteStationApp()
+        "route_station" -> RouteStationApp(screenContent)
         "station" -> StationApp(screenContent)
         "About project" -> AboutApp()
     }

@@ -14,10 +14,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
-import com.example.coursework.ui.route_station.RouteStationTopAppBar
 import com.example.coursework.ui.route_station.viewModels.RouteStationDetailsViewModel
 import com.example.coursework.ui.state.RouteStationUiState
 import com.example.coursework.R
+import com.example.coursework.ui.CourseWorkTopAppBar
 import kotlinx.coroutines.launch
 
 object RouteStationDetailsDestination : NavigationDestination {
@@ -29,6 +29,7 @@ object RouteStationDetailsDestination : NavigationDestination {
 
 @Composable
 fun RouteStationDetailsScreen(
+    screenContent: MutableState<String>,
     navigateToEditRouteStation: (Int) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -38,7 +39,8 @@ fun RouteStationDetailsScreen(
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            RouteStationTopAppBar(
+            CourseWorkTopAppBar(
+                screenContent = screenContent,
                 title = stringResource(RouteStationDetailsDestination.titleRes),
                 canNavigateBack = true,
                 navigateUp = navigateBack

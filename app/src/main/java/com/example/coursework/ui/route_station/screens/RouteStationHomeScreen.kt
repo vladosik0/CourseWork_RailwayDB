@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -20,11 +21,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coursework.R
 import com.example.coursework.data.classes.RouteStation
 import com.example.coursework.ui.AppViewModelProvider
+import com.example.coursework.ui.CourseWorkTopAppBar
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.route_station.viewModels.RouteStationHomeViewModel
+import com.example.coursework.ui.train.screens.TrainHomeDestination
 
 object RouteStationHomeDestination : NavigationDestination {
-    override val route = "station_home"
+    override val route = "route_station_home"
     override val titleRes = R.string.route_station_title
 }
 
@@ -33,6 +36,7 @@ object RouteStationHomeDestination : NavigationDestination {
  */
 @Composable
 fun RouteStationHomeScreen(
+    screenContent: MutableState<String>,
     navigateToRouteStationInput: () -> Unit,
     navigateToRouteStationUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -53,6 +57,13 @@ fun RouteStationHomeScreen(
                 )
             }
         },
+        topBar = {
+            CourseWorkTopAppBar(
+                screenContent = screenContent,
+                title = stringResource(TrainHomeDestination.titleRes),
+                canNavigateBack = false
+            )
+        }
     ) { innerPadding ->
         RouteStationHomeBody(
             routeStationList = homeUiState.stationList,
@@ -108,34 +119,34 @@ private fun RouteStationItem(
     onRouteStationClick: (RouteStation) -> Unit,
     modifier: Modifier = Modifier
 ) {
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .clickable { onRouteStationClick(routeStation) }
-                .padding(8.dp),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = stringResource(id = R.string.id_title) + ": " + routeStation.id.toString(),
-                modifier = Modifier.padding(4.dp),
-                color = Color.Black, textAlign = TextAlign.Center
-            )
-            Text(
-                text = stringResource(id = R.string.route_station_route_serial_number_title) + ": " + routeStation.routeSerialNumber.toString(),
-                modifier = Modifier.padding(4.dp),
-                color = Color.Black, textAlign = TextAlign.Center
-            )
-            Text(
-                text = stringResource(id = R.string.route_station_station_id_title) + ": " + routeStation.stationId.toString(),
-                modifier = Modifier.padding(4.dp),
-                color = Color.Black, textAlign = TextAlign.Center
-            )
-            Text(
-                text = stringResource(id = R.string.route_station_route_id_title) + ": " + routeStation.routeId.toString(),
-                modifier = Modifier.padding(4.dp),
-                color = Color.Black, textAlign = TextAlign.Center
-            )
-        }
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { onRouteStationClick(routeStation) }
+            .padding(8.dp),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = stringResource(id = R.string.id_title) + ": " + routeStation.id.toString(),
+            modifier = Modifier.padding(4.dp),
+            color = Color.Black, textAlign = TextAlign.Center
+        )
+        Text(
+            text = stringResource(id = R.string.route_station_route_serial_number_title) + ": " + routeStation.routeSerialNumber.toString(),
+            modifier = Modifier.padding(4.dp),
+            color = Color.Black, textAlign = TextAlign.Center
+        )
+        Text(
+            text = stringResource(id = R.string.route_station_station_id_title) + ": " + routeStation.stationId.toString(),
+            modifier = Modifier.padding(4.dp),
+            color = Color.Black, textAlign = TextAlign.Center
+        )
+        Text(
+            text = stringResource(id = R.string.route_station_route_id_title) + ": " + routeStation.routeId.toString(),
+            modifier = Modifier.padding(4.dp),
+            color = Color.Black, textAlign = TextAlign.Center
+        )
+    }
 }
 
