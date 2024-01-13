@@ -18,9 +18,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.state.TrainUiState
-import com.example.coursework.ui.train.TrainTopAppBar
 import com.example.coursework.ui.train.viewModels.TrainInputViewModel
 import com.example.coursework.R
+import com.example.coursework.ui.CourseWorkTopAppBar
 import kotlinx.coroutines.launch
 
 object TrainInputDestination : NavigationDestination {
@@ -40,7 +40,7 @@ fun TrainInputScreen(
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            TrainTopAppBar(
+            CourseWorkTopAppBar(
                 screenContent = screenContent,
                 title = stringResource(TrainInputDestination.titleRes),
                 canNavigateBack = canNavigateBack,

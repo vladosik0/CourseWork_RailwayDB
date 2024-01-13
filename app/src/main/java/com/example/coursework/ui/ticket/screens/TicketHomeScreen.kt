@@ -23,7 +23,7 @@ import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.ticket.viewModels.TicketHomeViewModel
 import com.example.coursework.R
-import com.example.coursework.ui.ticket.TicketTopAppBar
+import com.example.coursework.ui.CourseWorkTopAppBar
 
 object TicketHomeDestination : NavigationDestination {
     override val route = "ticket_home"
@@ -56,7 +56,7 @@ fun TicketHomeScreen(
             }
         },
         topBar = {
-            TicketTopAppBar(
+            CourseWorkTopAppBar(
                 screenContent = screenContent,
                 title = stringResource(TicketHomeDestination.titleRes),
                 canNavigateBack = false

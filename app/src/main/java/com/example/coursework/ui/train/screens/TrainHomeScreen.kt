@@ -23,7 +23,7 @@ import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.train.viewModels.TrainHomeViewModel
 import com.example.coursework.R
-import com.example.coursework.ui.train.TrainTopAppBar
+import com.example.coursework.ui.CourseWorkTopAppBar
 
 object TrainHomeDestination : NavigationDestination {
     override val route = "train_home"
@@ -56,7 +56,7 @@ fun TrainHomeScreen(
             }
         },
         topBar = {
-            TrainTopAppBar(
+            CourseWorkTopAppBar(
                 screenContent = screenContent,
                 title = stringResource(TrainHomeDestination.titleRes),
                 canNavigateBack = false

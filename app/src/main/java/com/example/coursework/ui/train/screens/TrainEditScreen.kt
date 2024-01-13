@@ -10,9 +10,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
-import com.example.coursework.ui.train.TrainTopAppBar
 import com.example.coursework.ui.train.viewModels.TrainEditViewModel
 import com.example.coursework.R
+import com.example.coursework.ui.CourseWorkTopAppBar
 import kotlinx.coroutines.launch
 
 object TrainEditDestination : NavigationDestination {
@@ -33,7 +33,7 @@ fun TrainEditScreen(
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            TrainTopAppBar(
+            CourseWorkTopAppBar(
                 screenContent = screenContent,
                 title = stringResource(TrainEditDestination.titleRes),
                 canNavigateBack = true,

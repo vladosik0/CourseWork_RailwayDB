@@ -15,9 +15,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.state.TicketUiState
-import com.example.coursework.ui.ticket.TicketTopAppBar
 import com.example.coursework.ui.ticket.viewModels.TicketDetailsViewModel
 import com.example.coursework.R
+import com.example.coursework.ui.CourseWorkTopAppBar
 import kotlinx.coroutines.launch
 
 object TicketDetailsDestination : NavigationDestination {
@@ -39,7 +39,7 @@ fun TicketDetailsScreen(
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            TicketTopAppBar(
+            CourseWorkTopAppBar(
                 screenContent = screenContent,
                 title = stringResource(TicketDetailsDestination.titleRes),
                 canNavigateBack = true,
