@@ -10,11 +10,11 @@ import com.example.coursework.data.repositories.offlineRepositories.*
 interface AppContainer {
     val routeStationsRepository: RouteStationsRepository
     val seatsRepository: SeatsRepository
-    val stationsRepository:StationsRepository
+    val stationsRepository: StationsRepository
     val ticketsRepository: TicketsRepository
     val trainRoutesRepository: TrainRoutesRepository
     val trainsRepository: TrainsRepository
-    val wagonsRepository:WagonsRepository
+    val wagonsRepository: WagonsRepository
 }
 
 /**

@@ -6,6 +6,7 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.coursework.CourseWorkViewModel
 import com.example.coursework.RailwayApplication
 import com.example.coursework.ui.route_station.viewModels.*
 import com.example.coursework.ui.station.viewModels.*
@@ -146,6 +147,14 @@ object AppViewModelProvider {
                 railwayApplication().container.trainsRepository
             )
         }
+
+        // Initializer for CourseWorkViewModel
+        initializer {
+            CourseWorkViewModel(
+                railwayApplication().databaseTableNameRepository
+            )
+        }
+
         // Initializer for StationHomeViewModel
         initializer {
             StationHomeViewModel(railwayApplication().container.stationsRepository)

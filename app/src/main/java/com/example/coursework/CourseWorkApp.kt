@@ -15,8 +15,11 @@ import com.example.coursework.ui.wagon.WagonApp
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun CourseWorkApp() {
-    val screenContent = remember { mutableStateOf("train") }
+fun CourseWorkApp(
+    //viewModel: CourseWorkViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
+    //val screenContentUiState by viewModel.databaseTableNameUiState.collectAsState()
+    val screenContent = remember{ mutableStateOf("train") }
     when (screenContent.value) {
         "train" -> TrainApp(screenContent)
         "train_route" -> TrainRouteApp(screenContent)
