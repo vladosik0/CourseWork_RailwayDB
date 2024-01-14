@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -14,10 +13,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coursework.CourseWorkViewModel
 import com.example.coursework.R
 
 @Composable
-fun TopAppBarDropdownMenu(screenContent: MutableState<String>) {
+fun TopAppBarDropdownMenu() {
+    val viewModel: CourseWorkViewModel = viewModel(factory = AppViewModelProvider.Factory)
     val expanded = remember { mutableStateOf(false) }
     Box(
         Modifier
@@ -41,7 +43,7 @@ fun TopAppBarDropdownMenu(screenContent: MutableState<String>) {
     ) {
         DropdownMenuItem(onClick = {
             expanded.value = false
-            screenContent.value = "station"
+            viewModel.changeDatabaseTableNameUiState("station")
         }) {
             Text(stringResource(id = R.string.station_title))
         }
@@ -50,7 +52,7 @@ fun TopAppBarDropdownMenu(screenContent: MutableState<String>) {
 
         DropdownMenuItem(onClick = {
             expanded.value = false
-            screenContent.value = "route_station"
+            viewModel.changeDatabaseTableNameUiState("route_station")
         }) {
             Text(stringResource(id = R.string.route_station_title))
         }
@@ -59,7 +61,7 @@ fun TopAppBarDropdownMenu(screenContent: MutableState<String>) {
 
         DropdownMenuItem(onClick = {
             expanded.value = false
-            screenContent.value = "train_route"
+            viewModel.changeDatabaseTableNameUiState("train_route")
         }) {
             Text(stringResource(id = R.string.train_route_title))
         }
@@ -68,7 +70,7 @@ fun TopAppBarDropdownMenu(screenContent: MutableState<String>) {
 
         DropdownMenuItem(onClick = {
             expanded.value = false
-            screenContent.value = "train"
+            viewModel.changeDatabaseTableNameUiState("train")
         }) {
             Text(stringResource(id = R.string.train_title))
         }
@@ -76,7 +78,7 @@ fun TopAppBarDropdownMenu(screenContent: MutableState<String>) {
 
         DropdownMenuItem(onClick = {
             expanded.value = false
-            screenContent.value = "seat"
+            viewModel.changeDatabaseTableNameUiState("seat")
         }) {
             Text(stringResource(id = R.string.seat_title))
         }
@@ -84,7 +86,7 @@ fun TopAppBarDropdownMenu(screenContent: MutableState<String>) {
 
         DropdownMenuItem(onClick = {
             expanded.value = false
-            screenContent.value = "ticket"
+            viewModel.changeDatabaseTableNameUiState("ticket")
         }) {
             Text(stringResource(id = R.string.ticket_title))
         }
@@ -92,14 +94,14 @@ fun TopAppBarDropdownMenu(screenContent: MutableState<String>) {
 
         DropdownMenuItem(onClick = {
             expanded.value = false
-            screenContent.value = "wagon"
+            viewModel.changeDatabaseTableNameUiState("wagon")
         }) {
             Text(stringResource(id = R.string.wagon_title))
         }
         Divider()
         DropdownMenuItem(onClick = {
             expanded.value = false
-            screenContent.value = "About project"
+            viewModel.changeDatabaseTableNameUiState("About project")
         }) {
             Text(stringResource(id = R.string.about_title))
         }

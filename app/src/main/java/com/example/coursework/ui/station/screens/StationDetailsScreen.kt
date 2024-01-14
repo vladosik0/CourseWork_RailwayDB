@@ -29,7 +29,6 @@ object StationDetailsDestination : NavigationDestination {
 
 @Composable
 fun StationDetailsScreen(
-    screenContent: MutableState<String>,
     navigateToEditStation: (Int) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -40,7 +39,6 @@ fun StationDetailsScreen(
     Scaffold(
         topBar = {
             CourseWorkTopAppBar(
-                screenContent = screenContent,
                 title = stringResource(StationDetailsDestination.titleRes),
                 canNavigateBack = true,
                 navigateUp = navigateBack

@@ -1,7 +1,6 @@
 package com.example.coursework.ui.ticket.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -15,7 +14,6 @@ import com.example.coursework.ui.ticket.screens.*
  */
 @Composable
 fun TicketNavHost(
-    screenContent: MutableState<String>,
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
@@ -26,7 +24,6 @@ fun TicketNavHost(
     ) {
         composable(route = TicketHomeDestination.route) {
             TicketHomeScreen(
-                screenContent = screenContent,
                 navigateToTicketInput = { navController.navigate(TicketInputDestination.route) },
                 navigateToTicketUpdate = {
                     navController.navigate("${TicketDetailsDestination.route}/${it}")
@@ -35,7 +32,6 @@ fun TicketNavHost(
         }
         composable(route = TicketInputDestination.route) {
             TicketInputScreen(
-                screenContent = screenContent,
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
             )
@@ -47,7 +43,6 @@ fun TicketNavHost(
             })
         ) {
             TicketDetailsScreen(
-                screenContent = screenContent,
                 navigateToEditTicket = { navController.navigate("${TicketEditDestination.route}/$it") },
                 navigateBack = { navController.navigateUp() }
             )
@@ -59,7 +54,6 @@ fun TicketNavHost(
             })
         ) {
             TicketEditScreen(
-                screenContent = screenContent,
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
             )

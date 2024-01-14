@@ -1,7 +1,6 @@
 package com.example.coursework.ui.route_station.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -15,7 +14,6 @@ import com.example.coursework.ui.route_station.screens.*
  */
 @Composable
 fun RouteStationNavHost(
-    screenContent: MutableState<String>,
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
@@ -26,7 +24,6 @@ fun RouteStationNavHost(
     ) {
         composable(route = RouteStationHomeDestination.route) {
             RouteStationHomeScreen(
-                screenContent = screenContent,
                 navigateToRouteStationInput = { navController.navigate(RouteStationInputDestination.route) },
                 navigateToRouteStationUpdate = {
                     navController.navigate("${RouteStationDetailsDestination.route}/${it}")
@@ -35,7 +32,6 @@ fun RouteStationNavHost(
         }
         composable(route = RouteStationInputDestination.route) {
             RouteStationInputScreen(
-                screenContent = screenContent,
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
             )
@@ -47,7 +43,6 @@ fun RouteStationNavHost(
             })
         ) {
             RouteStationDetailsScreen(
-                screenContent = screenContent,
                 navigateToEditRouteStation = { navController.navigate("${RouteStationEditDestination.route}/$it") },
                 navigateBack = { navController.navigateUp() }
             )
@@ -59,7 +54,6 @@ fun RouteStationNavHost(
             })
         ) {
             RouteStationEditScreen(
-                screenContent = screenContent,
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
             )

@@ -8,7 +8,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -35,7 +34,6 @@ object WagonHomeDestination : NavigationDestination {
  */
 @Composable
 fun WagonHomeScreen(
-    screenContent: MutableState<String>,
     navigateToWagonInput: () -> Unit,
     navigateToWagonUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -57,7 +55,6 @@ fun WagonHomeScreen(
         },
         topBar = {
             CourseWorkTopAppBar(
-                screenContent = screenContent,
                 title = stringResource(WagonHomeDestination.titleRes),
                 canNavigateBack = false
             )

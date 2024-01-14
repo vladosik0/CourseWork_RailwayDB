@@ -2,8 +2,10 @@ package com.example.coursework
 
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.route_station.RouteStationApp
 import com.example.coursework.ui.seat.SeatApp
 import com.example.coursework.ui.station.StationApp
@@ -16,18 +18,17 @@ import com.example.coursework.ui.wagon.WagonApp
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun CourseWorkApp(
-    //viewModel: CourseWorkViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: CourseWorkViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    //val screenContentUiState by viewModel.databaseTableNameUiState.collectAsState()
-    val screenContent = remember{ mutableStateOf("train") }
-    when (screenContent.value) {
-        "train" -> TrainApp(screenContent)
-        "train_route" -> TrainRouteApp(screenContent)
-        "seat" -> SeatApp(screenContent)
-        "wagon" -> WagonApp(screenContent)
-        "ticket" -> TicketApp(screenContent)
-        "route_station" -> RouteStationApp(screenContent)
-        "station" -> StationApp(screenContent)
-        "About project" -> AboutApp(screenContent)
+    val screenContentUiState by viewModel.databaseTableNameUiState.collectAsState()
+    when (screenContentUiState.tableName) {
+        "train" -> TrainApp()
+        "train_route" -> TrainRouteApp()
+        "seat" -> SeatApp()
+        "wagon" -> WagonApp()
+        "ticket" -> TicketApp()
+        "route_station" -> RouteStationApp()
+        "station" -> StationApp()
+        "About project" -> AboutApp()
     }
 }

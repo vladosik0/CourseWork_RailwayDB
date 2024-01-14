@@ -1,7 +1,6 @@
 package com.example.coursework.ui.seat
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.coursework.ui.seat.navigation.SeatNavHost
@@ -11,11 +10,9 @@ import com.example.coursework.ui.seat.navigation.SeatNavHost
  */
 @Composable
 fun SeatApp(
-    screenContent: MutableState<String>,
     navController: NavHostController = rememberNavController()
 ) {
     SeatNavHost(
-        screenContent = screenContent,
         navController = navController
     )
 }

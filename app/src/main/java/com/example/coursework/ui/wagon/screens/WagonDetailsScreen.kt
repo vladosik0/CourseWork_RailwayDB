@@ -29,7 +29,6 @@ object WagonDetailsDestination : NavigationDestination {
 
 @Composable
 fun WagonDetailsScreen(
-    screenContent: MutableState<String>,
     navigateToEditWagon: (Int) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -40,7 +39,6 @@ fun WagonDetailsScreen(
     Scaffold(
         topBar = {
             CourseWorkTopAppBar(
-                screenContent = screenContent,
                 title = stringResource(WagonDetailsDestination.titleRes),
                 canNavigateBack = true,
                 navigateUp = navigateBack

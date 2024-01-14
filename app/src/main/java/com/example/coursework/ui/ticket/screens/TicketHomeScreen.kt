@@ -8,7 +8,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -35,7 +34,6 @@ object TicketHomeDestination : NavigationDestination {
  */
 @Composable
 fun TicketHomeScreen(
-    screenContent: MutableState<String>,
     navigateToTicketInput: () -> Unit,
     navigateToTicketUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -57,7 +55,6 @@ fun TicketHomeScreen(
         },
         topBar = {
             CourseWorkTopAppBar(
-                screenContent = screenContent,
                 title = stringResource(TicketHomeDestination.titleRes),
                 canNavigateBack = false
             )

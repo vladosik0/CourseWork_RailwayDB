@@ -8,7 +8,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -35,7 +34,6 @@ object RouteStationHomeDestination : NavigationDestination {
  */
 @Composable
 fun RouteStationHomeScreen(
-    screenContent: MutableState<String>,
     navigateToRouteStationInput: () -> Unit,
     navigateToRouteStationUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -58,7 +56,6 @@ fun RouteStationHomeScreen(
         },
         topBar = {
             CourseWorkTopAppBar(
-                screenContent = screenContent,
                 title = stringResource(RouteStationHomeDestination.titleRes),
                 canNavigateBack = false
             )
