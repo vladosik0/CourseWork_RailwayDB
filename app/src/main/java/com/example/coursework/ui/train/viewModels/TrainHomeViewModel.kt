@@ -24,7 +24,7 @@ class TrainHomeViewModel(trainsRepository: TrainsRepository) : ViewModel() {
     }
 }
 
-    /**
-     * Ui State for TrainHomeScreen
-     */
-    data class TrainHomeUiState(val trainList: List<Train> = listOf())
+/**
+ * Ui State for TrainHomeScreen
+ */
+data class TrainHomeUiState(val trainList: List<Train> = listOf())
