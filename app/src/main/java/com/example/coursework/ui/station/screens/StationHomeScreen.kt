@@ -4,15 +4,20 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -48,8 +53,7 @@ fun StationHomeScreen(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(R.string.row_input_title),
-                    tint = MaterialTheme.colors.onPrimary
+                    contentDescription = stringResource(R.string.row_input_title)
                 )
             }
         },
@@ -83,7 +87,7 @@ private fun StationHomeBody(
         if (stationList.isEmpty()) {
             Text(
                 text = stringResource(R.string.no_rows_description),
-                style = MaterialTheme.typography.subtitle2
+                style = MaterialTheme.typography.headlineMedium
             )
         } else {
             StationList(stationList = stationList, onStationClick = { onStationClick(it.id) })
@@ -99,7 +103,7 @@ private fun StationList(
 ) {
     LazyColumn(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         items(items = stationList, key = {it.id}){ item->
-            Card(modifier = Modifier.padding(8.dp), elevation = 6.dp) {
+            Card(modifier = Modifier.padding(8.dp), elevation = CardDefaults.cardElevation(6.dp)) {
                 StationItem(station = item, onStationClick = onStationClick)
             }
         }
@@ -125,12 +129,12 @@ private fun StationItem(
         Text(
             text = stringResource(id = R.string.id_title) + ": " + station.id.toString(),
             modifier = Modifier.padding(4.dp),
-            color = Color.Black, textAlign = TextAlign.Center
+            textAlign = TextAlign.Center
         )
         Text(
             text = stringResource(id = R.string.station_name_title) + ": " + station.stationName,
             modifier = Modifier.padding(4.dp),
-            color = Color.Black, textAlign = TextAlign.Center
+            textAlign = TextAlign.Center
         )
     }
 }

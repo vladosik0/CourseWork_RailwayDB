@@ -4,9 +4,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -48,8 +54,7 @@ fun SeatHomeScreen(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(R.string.row_input_title),
-                    tint = MaterialTheme.colors.onPrimary
+                    contentDescription = stringResource(R.string.row_input_title)
                 )
             }
         },
@@ -83,7 +88,7 @@ private fun SeatHomeBody(
         if (seatList.isEmpty()) {
             Text(
                 text = stringResource(R.string.no_rows_description),
-                style = MaterialTheme.typography.subtitle2
+                style = MaterialTheme.typography.headlineMedium
             )
         } else {
             SeatList(seatList = seatList, onSeatClick = { onSeatClick(it.id) })
@@ -99,7 +104,7 @@ private fun SeatList(
 ) {
     LazyColumn(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         items(items = seatList, key = {it.id}){ item->
-            Card(modifier = Modifier.padding(8.dp), elevation = 6.dp) {
+            Card(modifier = Modifier.padding(8.dp), elevation = CardDefaults.cardElevation(6.dp)) {
                 SeatItem(seat = item, onSeatClick = onSeatClick)
             }
         }
@@ -125,17 +130,17 @@ private fun SeatItem(
         Text(
             text = stringResource(id = R.string.id_title) + ": " + seat.id.toString(),
             modifier = Modifier.padding(4.dp),
-            color = Color.Black, textAlign = TextAlign.Center
+            textAlign = TextAlign.Center
         )
         Text(
             text = stringResource(id = R.string.seat_seat_number_title) + ": " + seat.seatNumber.toString(),
             modifier = Modifier.padding(4.dp),
-            color = Color.Black, textAlign = TextAlign.Center
+            textAlign = TextAlign.Center
         )
         Text(
             text = stringResource(id = R.string.seat_wagon_id_title) + ": " + seat.wagonId.toString(),
             modifier = Modifier.padding(4.dp),
-            color = Color.Black, textAlign = TextAlign.Center
+            textAlign = TextAlign.Center
         )
     }
 }

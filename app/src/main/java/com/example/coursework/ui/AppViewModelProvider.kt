@@ -63,9 +63,9 @@ object AppViewModelProvider {
         }
         // Initializer for TrainEditViewModel
         initializer {
-            TrainEditViewModel(
+            TrainRouteEditViewModel(
                 this.createSavedStateHandle(),
-                railwayApplication().container.trainsRepository
+                railwayApplication().container.trainRoutesRepository
             )
         }
 

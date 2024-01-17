@@ -33,6 +33,6 @@ class DatabaseTableNameRepository(
             }
         }
         .map { preferences ->
-            preferences[TABLE_NAME] ?: ""
+            preferences[TABLE_NAME] ?: "train"
         }
 }
