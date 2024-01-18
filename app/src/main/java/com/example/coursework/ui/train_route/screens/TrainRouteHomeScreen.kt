@@ -8,17 +8,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,6 +33,7 @@ import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.train_route.viewModels.TrainRouteHomeViewModel
 import com.example.coursework.R
 import com.example.coursework.ui.CourseWorkTopAppBar
+import kotlinx.coroutines.delay
 
 object TrainRouteHomeDestination : NavigationDestination {
     override val route = "train_route_home"
@@ -79,19 +84,33 @@ private fun TrainRouteHomeBody(
     onTrainRouteClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        if (trainRouteList.isEmpty()) {
-            Text(
-                text = stringResource(R.string.no_rows_description),
-                style = MaterialTheme.typography.headlineMedium
-            )
-        } else {
-            TrainRouteList(trainRouteList = trainRouteList, onTrainRouteClick = { onTrainRouteClick(it.id) })
+    var isLoading by remember { mutableStateOf(true) }
+    if (isLoading) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+            LaunchedEffect(key1 = isLoading) {
+                delay(2_000L)
+                isLoading = false
+            }
+        }
+    } else {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            if (trainRouteList.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.no_rows_description),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            } else {
+                TrainRouteList(trainRouteList = trainRouteList, onTrainRouteClick = { onTrainRouteClick(it.id) })
+            }
         }
     }
 }
