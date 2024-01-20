@@ -9,26 +9,27 @@ import com.example.coursework.ui.train.screens.TrainDetailsDestination
 import kotlinx.coroutines.flow.*
 
 
-    class TrainDetailsViewModel(
-        savedStateHandle: SavedStateHandle,
-        private val trainsRepository: TrainsRepository
-    ) : ViewModel() {
+class TrainDetailsViewModel(
+    savedStateHandle: SavedStateHandle,
+    private val trainsRepository: TrainsRepository
+) : ViewModel() {
 
-        private val trainId: Int = checkNotNull(savedStateHandle[TrainDetailsDestination.trainIdArg])
-        val uiState: StateFlow<TrainUiState> = trainsRepository.getTrainStream(trainId)
-            .filterNotNull()
-            .map {
-                it.toTrainUiState(actionEnabled = true)
-            }.stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-                initialValue = TrainUiState()
-            )
-        suspend fun deleteTrain() {
-            trainsRepository.deleteTrain(uiState.value.toTrain())
-        }
+    private val trainId: Int = checkNotNull(savedStateHandle[TrainDetailsDestination.trainIdArg])
+    val uiState: StateFlow<TrainUiState> = trainsRepository.getTrainStream(trainId)
+        .filterNotNull()
+        .map {
+            it.toTrainUiState(actionEnabled = true)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+            initialValue = TrainUiState()
+        )
 
-        companion object {
-            private const val TIMEOUT_MILLIS = 5_000L
-        }
+    suspend fun deleteTrain() {
+        trainsRepository.deleteTrain(uiState.value.toTrain())
     }
+
+    companion object {
+        private const val TIMEOUT_MILLIS = 5_000L
+    }
+}

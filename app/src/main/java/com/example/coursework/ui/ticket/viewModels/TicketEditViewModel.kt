@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.coursework.data.repositories.TicketsRepository
 import com.example.coursework.ui.state.*
 import com.example.coursework.ui.ticket.screens.TicketEditDestination
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ class TicketEditViewModel(
         }
     }
     init{
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             ticketUiState = ticketsRepository.getTicketStream(ticketId)
                 .filterNotNull()
                 .first()

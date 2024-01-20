@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.coursework.data.repositories.TrainRoutesRepository
 import com.example.coursework.ui.state.*
 import com.example.coursework.ui.train_route.screens.TrainRouteEditDestination
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ class TrainRouteEditViewModel(
         }
     }
     init{
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             trainRouteUiState = trainRoutesRepository.getTrainRouteStream(trainRouteId)
                 .filterNotNull()
                 .first()

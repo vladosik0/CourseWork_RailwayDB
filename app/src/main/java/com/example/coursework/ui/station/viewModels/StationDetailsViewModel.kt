@@ -12,25 +12,26 @@ import kotlinx.coroutines.flow.*
 
 
 class StationDetailsViewModel(
-        savedStateHandle: SavedStateHandle,
-        private val stationsRepository: StationsRepository
-    ) : ViewModel() {
+    savedStateHandle: SavedStateHandle,
+    private val stationsRepository: StationsRepository
+) : ViewModel() {
 
-        private val stationId: Int = checkNotNull(savedStateHandle[StationDetailsDestination.stationIdArg])
-        val uiState: StateFlow<StationUiState> = stationsRepository.getStationStream(stationId)
-            .filterNotNull()
-            .map {
-                it.toStationUiState(actionEnabled = true)
-            }.stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-                initialValue = StationUiState()
-            )
-        suspend fun deleteItem() {
-            stationsRepository.deleteStation(uiState.value.toStation())
-        }
+    private val stationId: Int = checkNotNull(savedStateHandle[StationDetailsDestination.stationIdArg])
+    val uiState: StateFlow<StationUiState> = stationsRepository.getStationStream(stationId)
+        .filterNotNull()
+        .map {
+            it.toStationUiState(actionEnabled = true)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+            initialValue = StationUiState()
+        )
 
-        companion object {
-            private const val TIMEOUT_MILLIS = 5_000L
-        }
+    suspend fun deleteItem() {
+        stationsRepository.deleteStation(uiState.value.toStation())
     }
+
+    companion object {
+        private const val TIMEOUT_MILLIS = 5_000L
+    }
+}

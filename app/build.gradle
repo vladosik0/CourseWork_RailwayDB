@@ -6,6 +6,14 @@ plugins {
 
 android {
     compileSdk 33
+    signingConfigs {
+        myConfig {
+            storeFile file("C:\\Users\\vladk\\keystores\\coursework-release-keystore.jks")
+            storePassword "123456789"
+            keyAlias "release"
+            keyPassword "123456789"
+        }
+    }
 
     defaultConfig {
         applicationId "com.example.coursework"
@@ -22,7 +30,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.myConfig
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

@@ -17,7 +17,7 @@ class CourseWorkViewModel(
         _databaseTableNameUiState.asStateFlow()
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             databaseTableNameRepository.tableName.collect {
                 _databaseTableNameUiState.value = DatabaseTableNameUiState(it)
             }

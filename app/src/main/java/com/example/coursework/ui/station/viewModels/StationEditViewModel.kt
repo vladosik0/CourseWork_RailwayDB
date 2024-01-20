@@ -12,6 +12,7 @@ import com.example.coursework.ui.state.isValid
 import com.example.coursework.ui.state.toStation
 import com.example.coursework.ui.state.toStationUiState
 import com.example.coursework.ui.station.screens.StationEditDestination
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -38,7 +39,7 @@ class StationEditViewModel(
         }
     }
     init{
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             stationUiState = stationsRepository.getStationStream(stationId)
                 .filterNotNull()
                 .first()

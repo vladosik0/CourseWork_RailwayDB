@@ -10,12 +10,12 @@ import kotlinx.coroutines.flow.*
 
 
 class TrainRouteDetailsViewModel(
-        savedStateHandle: SavedStateHandle,
-        private val trainRoutesRepository: TrainRoutesRepository
-    ) : ViewModel() {
+    savedStateHandle: SavedStateHandle,
+    private val trainRoutesRepository: TrainRoutesRepository
+) : ViewModel() {
 
-        private val trainRouteId: Int = checkNotNull(savedStateHandle[TrainRouteDetailsDestination.trainRouteIdArg])
-        val uiState: StateFlow<TrainRouteUiState> = trainRoutesRepository.getTrainRouteStream(trainRouteId)
+    private val trainRouteId: Int = checkNotNull(savedStateHandle[TrainRouteDetailsDestination.trainRouteIdArg])
+    val uiState: StateFlow<TrainRouteUiState> = trainRoutesRepository.getTrainRouteStream(trainRouteId)
             .filterNotNull()
             .map {
                 it.toTrainRouteUiState(actionEnabled = true)
@@ -24,11 +24,12 @@ class TrainRouteDetailsViewModel(
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
                 initialValue = TrainRouteUiState()
             )
-        suspend fun deleteTrainRoute() {
-            trainRoutesRepository.deleteTrainRoute(uiState.value.toTrainRoute())
-        }
 
-        companion object {
-            private const val TIMEOUT_MILLIS = 5_000L
-        }
+    suspend fun deleteTrainRoute() {
+        trainRoutesRepository.deleteTrainRoute(uiState.value.toTrainRoute())
     }
+
+    companion object {
+        private const val TIMEOUT_MILLIS = 5_000L
+    }
+}

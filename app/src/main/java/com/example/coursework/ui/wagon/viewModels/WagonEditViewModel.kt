@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.coursework.data.repositories.WagonsRepository
 import com.example.coursework.ui.state.*
 import com.example.coursework.ui.wagon.screens.WagonEditDestination
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ class WagonEditViewModel(
         }
     }
     init{
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             wagonUiState = wagonsRepository.getWagonStream(wagonId)
                 .filterNotNull()
                 .first()
