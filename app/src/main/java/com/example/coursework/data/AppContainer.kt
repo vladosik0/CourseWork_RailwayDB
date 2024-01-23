@@ -3,6 +3,8 @@ package com.example.coursework.data
 import android.content.Context
 import com.example.coursework.data.repositories.*
 import com.example.coursework.data.repositories.offlineRepositories.*
+import com.example.coursework.data.repositories.relationsRepositories.RouteWithRouteStationsRepository
+import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineRouteWithRouteStationsRepository
 
 /**
  * App container for Dependency injection.
@@ -15,6 +17,7 @@ interface AppContainer {
     val trainRoutesRepository: TrainRoutesRepository
     val trainsRepository: TrainsRepository
     val wagonsRepository: WagonsRepository
+    val routeWithRouteStationsRepository: RouteWithRouteStationsRepository
 }
 
 /**
@@ -45,4 +48,9 @@ class AppDataContainer(private val context: Context) : AppContainer {
     override val wagonsRepository:WagonsRepository by lazy {
         OfflineWagonsRepository(RailwayDatabase.getDatabase(context).wagonDao())
     }
+
+    override val routeWithRouteStationsRepository: RouteWithRouteStationsRepository by lazy {
+        OfflineRouteWithRouteStationsRepository(RailwayDatabase.getDatabase(context).routeWithRouteStationsDao())
+    }
+
 }
