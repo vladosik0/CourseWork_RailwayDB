@@ -1,5 +1,6 @@
 package com.example.coursework.ui.route_station.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,18 +10,17 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.platform.LocalContext
 import com.example.coursework.ui.AppViewModelProvider
 import com.example.coursework.ui.NavigationDestination
 import com.example.coursework.ui.route_station.viewModels.RouteStationInputViewModel
 import com.example.coursework.ui.state.RouteStationUiState
 import com.example.coursework.R
 import com.example.coursework.ui.CourseWorkTopAppBar
-import kotlinx.coroutines.launch
 
 object RouteStationInputDestination : NavigationDestination {
     override val route = "route_station_input"
@@ -35,7 +35,7 @@ fun RouteStationInputScreen(
     canNavigateBack: Boolean = true,
     viewModel: RouteStationInputViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             CourseWorkTopAppBar(
@@ -49,8 +49,9 @@ fun RouteStationInputScreen(
             routeStationUiState = viewModel.routeStationUiState,
             onRouteStationValueChange = viewModel::updateUiState,
             onSaveClick = {
-                coroutineScope.launch {
-                    viewModel.saveRouteStation()
+                val toastMessage = viewModel.validateRouteStationInput()
+                Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+                if (toastMessage == "Row added successfully.") {
                     navigateBack()
                 }
             },
@@ -72,7 +73,10 @@ fun RouteStationInputBody(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        RouteStationInputForm(routeStationUiState = routeStationUiState, onValueChange = onRouteStationValueChange)
+        RouteStationInputForm(
+            routeStationUiState = routeStationUiState,
+            onValueChange = onRouteStationValueChange
+        )
         Button(
             onClick = onSaveClick,
             enabled = routeStationUiState.actionEnabled,

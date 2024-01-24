@@ -9,7 +9,7 @@ data class RouteWithRouteStations(
     @Embedded val route: TrainRoute,
     @Relation(
         parentColumn = "id",
-        entityColumn = "routeID"
+        entityColumn = "routeId"
     )
     val routeStations: List<RouteStation>
 )

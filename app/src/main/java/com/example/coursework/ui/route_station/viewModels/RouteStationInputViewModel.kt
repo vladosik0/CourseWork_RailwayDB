@@ -5,11 +5,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.coursework.data.repositories.RouteStationsRepository
+import com.example.coursework.data.repositories.relationsRepositories.RouteWithRouteStationsRepository
 import com.example.coursework.ui.state.RouteStationUiState
 import com.example.coursework.ui.state.isValid
 import com.example.coursework.ui.state.toRouteStation
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 
-class RouteStationInputViewModel(private val routeStationsRepository: RouteStationsRepository) : ViewModel() {
+class RouteStationInputViewModel(
+    private val routeWithRouteStationsRepository: RouteWithRouteStationsRepository,
+    private val routeStationsRepository: RouteStationsRepository
+) : ViewModel() {
 
     /**
      * Holds current routeStation ui state
@@ -22,12 +28,29 @@ class RouteStationInputViewModel(private val routeStationsRepository: RouteStati
      * a validation for input values.
      */
     fun updateUiState(newRouteStationUiState: RouteStationUiState) {
-        routeStationUiState = newRouteStationUiState.copy( actionEnabled = newRouteStationUiState.isValid())
+        routeStationUiState =
+            newRouteStationUiState.copy(actionEnabled = newRouteStationUiState.isValid())
     }
 
-    suspend fun saveRouteStation(){
-        if(routeStationUiState.isValid()){
-            routeStationsRepository.insertRouteStation(routeStationUiState.toRouteStation())
+    fun validateRouteStationInput(): String {
+        var message = ""
+        runBlocking(Dispatchers.IO) {
+            val routeWithRouteStationsList =
+                routeWithRouteStationsRepository.getRouteStationsAndRouts()
+            message = if (
+                //routeWithRouteStationsList.isEmpty() ||
+                !routeWithRouteStationsList.any { it.route.id == routeStationUiState.routeId.toInt() }
+            ) {
+                "Route with this Id doesn't exist!"
+            } else {
+                saveRouteStation()
+                "Row added successfully."
+            }
         }
+        return message
+    }
+
+    private suspend fun saveRouteStation() {
+        routeStationsRepository.insertRouteStation(routeStationUiState.toRouteStation())
     }
 }

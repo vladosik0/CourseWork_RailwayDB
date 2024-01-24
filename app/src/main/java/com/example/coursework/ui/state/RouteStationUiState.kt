@@ -14,7 +14,7 @@ fun RouteStationUiState.toRouteStation(): RouteStation = RouteStation(
     id = id,
     routeSerialNumber = routeSerialNumber.toIntOrNull() ?: 0,
     stationId = stationId.toIntOrNull() ?: 0,
-    routeId = stationId.toIntOrNull() ?: 0
+    routeId = routeId.toIntOrNull() ?: 0
 )
 
 fun RouteStation.toRouteStationUiState(actionEnabled: Boolean = false): RouteStationUiState = RouteStationUiState(

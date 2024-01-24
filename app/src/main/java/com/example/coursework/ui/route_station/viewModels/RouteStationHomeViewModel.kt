@@ -24,7 +24,7 @@ class RouteStationHomeViewModel(routeStationsRepository: RouteStationsRepository
     }
 }
 
-    /**
-     * Ui State for HomeStationScreen
-     */
-    data class RouteStationHomeUiState(val stationList: List<RouteStation> = listOf())
+/**
+ * Ui State for HomeStationScreen
+ */
+data class RouteStationHomeUiState(val stationList: List<RouteStation> = listOf())
