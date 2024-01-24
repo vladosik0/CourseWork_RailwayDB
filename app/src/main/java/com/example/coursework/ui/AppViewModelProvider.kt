@@ -37,6 +37,7 @@ object AppViewModelProvider {
         initializer {
             RouteStationEditViewModel(
                 this.createSavedStateHandle(),
+                railwayApplication().container.routeWithRouteStationsRepository,
                 railwayApplication().container.routeStationsRepository
             )
         }
