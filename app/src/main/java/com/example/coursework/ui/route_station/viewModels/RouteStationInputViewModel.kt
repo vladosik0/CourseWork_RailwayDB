@@ -4,13 +4,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.coursework.data.repositories.RouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.RouteWithRouteStationsRepository
 import com.example.coursework.ui.state.RouteStationUiState
 import com.example.coursework.ui.state.isValid
 import com.example.coursework.ui.state.toRouteStation
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.async
 
 class RouteStationInputViewModel(
     private val routeWithRouteStationsRepository: RouteWithRouteStationsRepository,
@@ -32,13 +33,11 @@ class RouteStationInputViewModel(
             newRouteStationUiState.copy(actionEnabled = newRouteStationUiState.isValid())
     }
 
-    fun validateRouteStationInput(): String {
-        var message = ""
-        runBlocking(Dispatchers.IO) {
+    suspend fun validateRouteStationInput(): String {
+        val message = viewModelScope.async(Dispatchers.IO) {
             val routeWithRouteStationsList =
                 routeWithRouteStationsRepository.getRouteStationsAndRouts()
-            message = if (
-                //routeWithRouteStationsList.isEmpty() ||
+            if (
                 !routeWithRouteStationsList.any { it.route.id == routeStationUiState.routeId.toInt() }
             ) {
                 "Route with this Id doesn't exist!"
@@ -47,7 +46,7 @@ class RouteStationInputViewModel(
                 "Row added successfully."
             }
         }
-        return message
+        return message.await()
     }
 
     private suspend fun saveRouteStation() {

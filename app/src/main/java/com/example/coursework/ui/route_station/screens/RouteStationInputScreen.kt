@@ -10,6 +10,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -21,6 +22,7 @@ import com.example.coursework.ui.route_station.viewModels.RouteStationInputViewM
 import com.example.coursework.ui.state.RouteStationUiState
 import com.example.coursework.R
 import com.example.coursework.ui.CourseWorkTopAppBar
+import kotlinx.coroutines.launch
 
 object RouteStationInputDestination : NavigationDestination {
     override val route = "route_station_input"
@@ -35,6 +37,7 @@ fun RouteStationInputScreen(
     canNavigateBack: Boolean = true,
     viewModel: RouteStationInputViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     Scaffold(
         topBar = {
@@ -49,10 +52,12 @@ fun RouteStationInputScreen(
             routeStationUiState = viewModel.routeStationUiState,
             onRouteStationValueChange = viewModel::updateUiState,
             onSaveClick = {
-                val toastMessage = viewModel.validateRouteStationInput()
-                Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
-                if (toastMessage == "Row added successfully.") {
-                    navigateBack()
+                coroutineScope.launch {
+                    val toastMessage = viewModel.validateRouteStationInput()
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+                    if (toastMessage == "Row added successfully.") {
+                        navigateBack()
+                    }
                 }
             },
             modifier = modifier.padding(innerPadding)
