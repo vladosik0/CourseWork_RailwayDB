@@ -37,11 +37,7 @@ class TrainInputViewModel(
                 !routeWithTrainsList.any { it.route.id == trainUiState.routeId.toInt() }
             ) {
                 "Route with this Id doesn't exist!"
-            } /*else if (
-                !stationWithRouteStationsList.any { it.station.id == routeStationUiState.stationId.toInt() }
-            ) {
-                "Station with this Id doesn't exist!"
-            } */else {
+            } else {
                 saveTrain()
                 "Row added successfully."
             }
@@ -49,7 +45,7 @@ class TrainInputViewModel(
         return message.await()
     }
 
-    private suspend fun saveTrain(){
+    private suspend fun saveTrain() {
         trainsRepository.insertTrain(trainUiState.toTrain())
 
     }

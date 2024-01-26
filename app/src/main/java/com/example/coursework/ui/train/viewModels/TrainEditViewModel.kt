@@ -41,11 +41,7 @@ class TrainEditViewModel(
                 !routeWithTrainsList.any { it.route.id == trainUiState.routeId.toInt() }
             ) {
                 "Route with this Id doesn't exist!"
-            } /*else if (
-                !stationWithRouteStationsList.any { it.station.id == routeStationUiState.stationId.toInt() }
-            ) {
-                "Station with this Id doesn't exist!"
-            } */else {
+            } else {
                 trainsRepository.updateTrain(trainUiState.toTrain())
                 "Row updated successfully."
             }
