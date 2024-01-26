@@ -6,10 +6,12 @@ import com.example.coursework.data.repositories.offlineRepositories.*
 import com.example.coursework.data.repositories.relationsRepositories.RouteWithRouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.RouteWithTrainsRepository
 import com.example.coursework.data.repositories.relationsRepositories.StationWithRouteStationsRepository
+import com.example.coursework.data.repositories.relationsRepositories.TrainWithWagonsRepository
 import com.example.coursework.data.repositories.relationsRepositories.WagonWithSeatsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineRouteWithRouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineRouteWithTrainsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineStationWithRouteStationsRepository
+import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineTrainWithWagonsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineWagonWithSeatsRepository
 
 /**
@@ -27,6 +29,7 @@ interface AppContainer {
     val stationWithRouteStationsRepository: StationWithRouteStationsRepository
     val routeWithTrainsRepository: RouteWithTrainsRepository
     val wagonWithSeatsRepository: WagonWithSeatsRepository
+    val trainWithWagonsRepository: TrainWithWagonsRepository
 }
 
 /**
@@ -42,7 +45,7 @@ class AppDataContainer(private val context: Context) : AppContainer {
     override val seatsRepository: SeatsRepository by lazy {
         OfflineSeatsRepository(RailwayDatabase.getDatabase(context).seatDao())
     }
-    override val stationsRepository:StationsRepository by lazy {
+    override val stationsRepository: StationsRepository by lazy {
         OfflineStationsRepository(RailwayDatabase.getDatabase(context).stationDao())
     }
     override val ticketsRepository: TicketsRepository by lazy {
@@ -54,7 +57,7 @@ class AppDataContainer(private val context: Context) : AppContainer {
     override val trainsRepository: TrainsRepository by lazy {
         OfflineTrainsRepository(RailwayDatabase.getDatabase(context).trainDao())
     }
-    override val wagonsRepository:WagonsRepository by lazy {
+    override val wagonsRepository: WagonsRepository by lazy {
         OfflineWagonsRepository(RailwayDatabase.getDatabase(context).wagonDao())
     }
 
@@ -82,6 +85,9 @@ class AppDataContainer(private val context: Context) : AppContainer {
         )
     }
 
-
-
+    override val trainWithWagonsRepository: TrainWithWagonsRepository by lazy {
+        OfflineTrainWithWagonsRepository(
+            RailwayDatabase.getDatabase(context).trainWithWagonsDao()
+        )
+    }
 }

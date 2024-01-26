@@ -9,6 +9,7 @@ import com.example.coursework.data.daos.*
 import com.example.coursework.data.daos.relationsDaos.RouteWithRouteStationsDao
 import com.example.coursework.data.daos.relationsDaos.RouteWithTrainsDao
 import com.example.coursework.data.daos.relationsDaos.StationWithRouteStationsDao
+import com.example.coursework.data.daos.relationsDaos.TrainWithWagonsDao
 import com.example.coursework.data.daos.relationsDaos.WagonWithSeatsDao
 
 
@@ -36,6 +37,7 @@ abstract class RailwayDatabase: RoomDatabase() {
     abstract fun stationWithRouteStationsDao(): StationWithRouteStationsDao
     abstract fun routeWithTrainsDao(): RouteWithTrainsDao
     abstract fun wagonWithSeatsDao(): WagonWithSeatsDao
+    abstract fun trainWithWagonsDao(): TrainWithWagonsDao
 
     companion object {
         @Volatile
