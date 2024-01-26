@@ -4,10 +4,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.coursework.data.repositories.TrainsRepository
+import com.example.coursework.data.repositories.relationsRepositories.RouteWithTrainsRepository
 import com.example.coursework.ui.state.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 
-class TrainInputViewModel(private val trainsRepository: TrainsRepository) : ViewModel() {
+class TrainInputViewModel(
+    private val trainsRepository: TrainsRepository,
+    private val routeWithTrainsRepository: RouteWithTrainsRepository
+) : ViewModel() {
 
     /**
      * Holds current train ui state
@@ -20,12 +27,30 @@ class TrainInputViewModel(private val trainsRepository: TrainsRepository) : View
      * a validation for input values.
      */
     fun updateUiState(newTrainUiState: TrainUiState) {
-        trainUiState = newTrainUiState.copy( actionEnabled = newTrainUiState.isValid())
+        trainUiState = newTrainUiState.copy(actionEnabled = newTrainUiState.isValid())
     }
 
-    suspend fun saveTrain(){
-        if(trainUiState.isValid()){
-            trainsRepository.insertTrain(trainUiState.toTrain())
+    suspend fun validateTrainInput(): String {
+        val message = viewModelScope.async(Dispatchers.IO) {
+            val routeWithTrainsList = routeWithTrainsRepository.getRoutesAndTrains()
+            if (
+                !routeWithTrainsList.any { it.route.id == trainUiState.routeId.toInt() }
+            ) {
+                "Route with this Id doesn't exist!"
+            } /*else if (
+                !stationWithRouteStationsList.any { it.station.id == routeStationUiState.stationId.toInt() }
+            ) {
+                "Station with this Id doesn't exist!"
+            } */else {
+                saveTrain()
+                "Row added successfully."
+            }
         }
+        return message.await()
+    }
+
+    private suspend fun saveTrain(){
+        trainsRepository.insertTrain(trainUiState.toTrain())
+
     }
 }

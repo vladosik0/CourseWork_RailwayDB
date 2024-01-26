@@ -1,5 +1,6 @@
 package com.example.coursework.ui.train.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -36,6 +38,7 @@ fun TrainInputScreen(
     viewModel: TrainInputViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             CourseWorkTopAppBar(
@@ -50,8 +53,11 @@ fun TrainInputScreen(
             onTrainValueChange = viewModel::updateUiState,
             onSaveClick = {
                 coroutineScope.launch {
-                    viewModel.saveTrain()
-                    navigateBack()
+                    val toastMessage = viewModel.validateTrainInput()
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+                    if (toastMessage == "Row added successfully.") {
+                        navigateBack()
+                    }
                 }
             },
             modifier = modifier.padding(innerPadding)
