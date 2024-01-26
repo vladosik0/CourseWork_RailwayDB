@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.coursework.data.classes.*
 import com.example.coursework.data.daos.*
 import com.example.coursework.data.daos.relationsDaos.RouteWithRouteStationsDao
+import com.example.coursework.data.daos.relationsDaos.RouteWithTrainsDao
 import com.example.coursework.data.daos.relationsDaos.StationWithRouteStationsDao
 
 
@@ -32,6 +33,7 @@ abstract class RailwayDatabase: RoomDatabase() {
     abstract fun wagonDao():WagonDao
     abstract fun routeWithRouteStationsDao(): RouteWithRouteStationsDao
     abstract fun stationWithRouteStationsDao(): StationWithRouteStationsDao
+    abstract fun routeWithTrainsDao(): RouteWithTrainsDao
 
     companion object {
         @Volatile

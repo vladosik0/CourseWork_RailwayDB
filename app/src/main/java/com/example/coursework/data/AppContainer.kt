@@ -4,8 +4,10 @@ import android.content.Context
 import com.example.coursework.data.repositories.*
 import com.example.coursework.data.repositories.offlineRepositories.*
 import com.example.coursework.data.repositories.relationsRepositories.RouteWithRouteStationsRepository
+import com.example.coursework.data.repositories.relationsRepositories.RouteWithTrainsRepository
 import com.example.coursework.data.repositories.relationsRepositories.StationWithRouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineRouteWithRouteStationsRepository
+import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineRouteWithTrainsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineStationWithRouteStationsRepository
 
 /**
@@ -21,6 +23,7 @@ interface AppContainer {
     val wagonsRepository: WagonsRepository
     val routeWithRouteStationsRepository: RouteWithRouteStationsRepository
     val stationWithRouteStationsRepository: StationWithRouteStationsRepository
+    val routeWithTrainsRepository: RouteWithTrainsRepository
 }
 
 /**
@@ -61,6 +64,12 @@ class AppDataContainer(private val context: Context) : AppContainer {
     override val stationWithRouteStationsRepository: StationWithRouteStationsRepository by lazy {
         OfflineStationWithRouteStationsRepository(
             RailwayDatabase.getDatabase(context).stationWithRouteStationsDao()
+        )
+    }
+
+    override val routeWithTrainsRepository: RouteWithTrainsRepository by lazy {
+        OfflineRouteWithTrainsRepository(
+            RailwayDatabase.getDatabase(context).routeWithTrainsDao()
         )
     }
 
