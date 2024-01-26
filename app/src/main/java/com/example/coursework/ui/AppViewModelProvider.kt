@@ -94,7 +94,10 @@ object AppViewModelProvider {
         }
         // Initializer for SeatInputViewModel
         initializer {
-            SeatInputViewModel(railwayApplication().container.seatsRepository)
+            SeatInputViewModel(
+                railwayApplication().container.seatsRepository,
+                railwayApplication().container.wagonWithSeatsRepository
+            )
         }
         // Initializer for WagonInputViewModel
         initializer {

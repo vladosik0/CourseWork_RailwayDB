@@ -4,10 +4,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.coursework.data.repositories.SeatsRepository
+import com.example.coursework.data.repositories.relationsRepositories.WagonWithSeatsRepository
 import com.example.coursework.ui.state.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 
-class SeatInputViewModel(private val seatsRepository: SeatsRepository) : ViewModel() {
+class SeatInputViewModel(
+    private val seatsRepository: SeatsRepository,
+    private val wagonWithSeatsRepository: WagonWithSeatsRepository
+) : ViewModel() {
 
     /**
      * Holds current seat ui state
@@ -20,12 +27,25 @@ class SeatInputViewModel(private val seatsRepository: SeatsRepository) : ViewMod
      * a validation for input values.
      */
     fun updateUiState(newSeatUiState: SeatUiState) {
-        seatUiState = newSeatUiState.copy( actionEnabled = newSeatUiState.isValid())
+        seatUiState = newSeatUiState.copy(actionEnabled = newSeatUiState.isValid())
     }
 
-    suspend fun saveSeat(){
-        if(seatUiState.isValid()){
-            seatsRepository.insertSeat(seatUiState.toSeat())
+    suspend fun validateSeatInput(): String {
+        val message = viewModelScope.async(Dispatchers.IO) {
+            val wagonWithSeatsList = wagonWithSeatsRepository.getWagonsAndSeats()
+            if (
+                !wagonWithSeatsList.any { it.wagon.id == seatUiState.wagonId.toInt() }
+            ) {
+                "Wagon with this Id doesn't exist!"
+            } else {
+                saveSeat()
+                "Row added successfully."
+            }
         }
+        return message.await()
+    }
+
+    suspend fun saveSeat() {
+        seatsRepository.insertSeat(seatUiState.toSeat())
     }
 }
