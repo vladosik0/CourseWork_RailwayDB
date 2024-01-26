@@ -45,7 +45,7 @@ class SeatInputViewModel(
         return message.await()
     }
 
-    suspend fun saveSeat() {
+    private suspend fun saveSeat() {
         seatsRepository.insertSeat(seatUiState.toSeat())
     }
 }

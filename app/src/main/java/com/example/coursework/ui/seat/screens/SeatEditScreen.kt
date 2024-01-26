@@ -1,10 +1,12 @@
 package com.example.coursework.ui.seat.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coursework.ui.AppViewModelProvider
@@ -28,6 +30,7 @@ fun SeatEditScreen(
     modifier: Modifier = Modifier,
     viewModel: SeatEditViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
@@ -43,8 +46,11 @@ fun SeatEditScreen(
             onSeatValueChange = viewModel::updateUiState,
             onSaveClick = {
                 coroutineScope.launch {
-                    viewModel.updateSeat()
-                    navigateBack()
+                    val toastMessage = viewModel.updateSeat()
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+                    if (toastMessage == "Row updated successfully.") {
+                        navigateBack()
+                    }
                 }
             },
             modifier = modifier.padding(innerPadding)
