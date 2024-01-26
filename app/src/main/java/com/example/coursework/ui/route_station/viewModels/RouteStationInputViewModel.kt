@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coursework.data.repositories.RouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.RouteWithRouteStationsRepository
+import com.example.coursework.data.repositories.relationsRepositories.StationWithRouteStationsRepository
 import com.example.coursework.ui.state.RouteStationUiState
 import com.example.coursework.ui.state.isValid
 import com.example.coursework.ui.state.toRouteStation
@@ -15,7 +16,8 @@ import kotlinx.coroutines.async
 
 class RouteStationInputViewModel(
     private val routeWithRouteStationsRepository: RouteWithRouteStationsRepository,
-    private val routeStationsRepository: RouteStationsRepository
+    private val routeStationsRepository: RouteStationsRepository,
+    private val stationWithRouteStationsRepository: StationWithRouteStationsRepository
 ) : ViewModel() {
 
     /**
@@ -37,10 +39,16 @@ class RouteStationInputViewModel(
         val message = viewModelScope.async(Dispatchers.IO) {
             val routeWithRouteStationsList =
                 routeWithRouteStationsRepository.getRouteStationsAndRouts()
+            val stationWithRouteStationsList =
+                stationWithRouteStationsRepository.getStationAndRouteStations()
             if (
                 !routeWithRouteStationsList.any { it.route.id == routeStationUiState.routeId.toInt() }
             ) {
                 "Route with this Id doesn't exist!"
+            } else if (
+                !stationWithRouteStationsList.any { it.station.id == routeStationUiState.stationId.toInt() }
+            ) {
+                "Station with this Id doesn't exist!"
             } else {
                 saveRouteStation()
                 "Row added successfully."

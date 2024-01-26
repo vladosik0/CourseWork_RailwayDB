@@ -82,7 +82,8 @@ object AppViewModelProvider {
         initializer {
             RouteStationInputViewModel(
                 railwayApplication().container.routeWithRouteStationsRepository,
-                railwayApplication().container.routeStationsRepository
+                railwayApplication().container.routeStationsRepository,
+                railwayApplication().container.stationWithRouteStationsRepository,
             )
         }
         // Initializer for TrainRouteInputViewModel
