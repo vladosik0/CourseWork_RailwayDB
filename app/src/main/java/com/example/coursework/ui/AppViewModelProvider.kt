@@ -62,7 +62,8 @@ object AppViewModelProvider {
         initializer {
             WagonEditViewModel(
                 this.createSavedStateHandle(),
-                railwayApplication().container.wagonsRepository
+                railwayApplication().container.wagonsRepository,
+                railwayApplication().container.trainWithWagonsRepository
             )
         }
         // Initializer for TrainEditViewModel
@@ -102,7 +103,10 @@ object AppViewModelProvider {
         }
         // Initializer for WagonInputViewModel
         initializer {
-            WagonInputViewModel(railwayApplication().container.wagonsRepository)
+            WagonInputViewModel(
+                railwayApplication().container.wagonsRepository,
+                railwayApplication().container.trainWithWagonsRepository
+            )
         }
         // Initializer for TrainInputViewModel
         initializer {

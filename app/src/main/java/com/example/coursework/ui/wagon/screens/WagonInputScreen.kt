@@ -1,5 +1,6 @@
 package com.example.coursework.ui.wagon.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -35,6 +37,7 @@ fun WagonInputScreen(
     canNavigateBack: Boolean = true,
     viewModel: WagonInputViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
@@ -50,8 +53,11 @@ fun WagonInputScreen(
             onWagonValueChange = viewModel::updateUiState,
             onSaveClick = {
                 coroutineScope.launch {
-                    viewModel.saveWagon()
-                    navigateBack()
+                    val toastMessage = viewModel.validateWagonInput()
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+                    if (toastMessage == "Row added successfully.") {
+                        navigateBack()
+                    }
                 }
             },
             modifier = modifier.padding(innerPadding)
