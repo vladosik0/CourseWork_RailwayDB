@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coursework.data.repositories.RouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.RouteWithRouteStationsRepository
+import com.example.coursework.data.repositories.relationsRepositories.StationWithRouteStationsRepository
 import com.example.coursework.ui.route_station.screens.RouteStationEditDestination
 import com.example.coursework.ui.state.*
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +20,8 @@ import kotlinx.coroutines.launch
 class RouteStationEditViewModel(
     savedStateHandle: SavedStateHandle,
     private val routeWithRouteStationsRepository: RouteWithRouteStationsRepository,
-    private val routeStationsRepository: RouteStationsRepository
+    private val routeStationsRepository: RouteStationsRepository,
+    private val stationWithRouteStationsRepository: StationWithRouteStationsRepository
 ) : ViewModel() {
 
     /**
@@ -37,16 +39,19 @@ class RouteStationEditViewModel(
     }
 
     suspend fun updateRouteStation(): String {
-        /*if(routeStationUiState.isValid()){
-            routeStationsRepository.updateRouteStation(routeStationUiState.toRouteStation())
-        }*/
         val message = viewModelScope.async(Dispatchers.IO) {
             val routeWithRouteStationsList =
                 routeWithRouteStationsRepository.getRouteStationsAndRouts()
+            val stationWithRouteStationsList =
+                stationWithRouteStationsRepository.getStationAndRouteStations()
             if (
                 !routeWithRouteStationsList.any { it.route.id == routeStationUiState.routeId.toInt() }
             ) {
                 "Route with this Id doesn't exist!"
+            } else if (
+                !stationWithRouteStationsList.any { it.station.id == routeStationUiState.stationId.toInt() }
+            ) {
+                "Station with this Id doesn't exist!"
             } else {
                 routeStationsRepository.updateRouteStation(routeStationUiState.toRouteStation())
                 "Row updated successfully."
