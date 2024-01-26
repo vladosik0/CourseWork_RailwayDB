@@ -6,9 +6,11 @@ import com.example.coursework.data.repositories.offlineRepositories.*
 import com.example.coursework.data.repositories.relationsRepositories.RouteWithRouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.RouteWithTrainsRepository
 import com.example.coursework.data.repositories.relationsRepositories.StationWithRouteStationsRepository
+import com.example.coursework.data.repositories.relationsRepositories.WagonWithSeatsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineRouteWithRouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineRouteWithTrainsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineStationWithRouteStationsRepository
+import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineWagonWithSeatsRepository
 
 /**
  * App container for Dependency injection.
@@ -24,6 +26,7 @@ interface AppContainer {
     val routeWithRouteStationsRepository: RouteWithRouteStationsRepository
     val stationWithRouteStationsRepository: StationWithRouteStationsRepository
     val routeWithTrainsRepository: RouteWithTrainsRepository
+    val wagonWithSeatsRepository: WagonWithSeatsRepository
 }
 
 /**
@@ -72,5 +75,13 @@ class AppDataContainer(private val context: Context) : AppContainer {
             RailwayDatabase.getDatabase(context).routeWithTrainsDao()
         )
     }
+
+    override val wagonWithSeatsRepository: WagonWithSeatsRepository by lazy {
+        OfflineWagonWithSeatsRepository(
+            RailwayDatabase.getDatabase(context).wagonWithSeatsDao()
+        )
+    }
+
+
 
 }
