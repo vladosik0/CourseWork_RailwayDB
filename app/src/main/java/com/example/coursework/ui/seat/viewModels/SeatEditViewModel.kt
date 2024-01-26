@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.coursework.data.classes.relations.WagonWithSeats
 import com.example.coursework.data.repositories.SeatsRepository
 import com.example.coursework.data.repositories.relationsRepositories.WagonWithSeatsRepository
 import com.example.coursework.ui.seat.screens.SeatEditDestination
