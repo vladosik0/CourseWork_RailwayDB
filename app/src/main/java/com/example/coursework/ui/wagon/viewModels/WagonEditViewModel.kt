@@ -50,7 +50,7 @@ class WagonEditViewModel(
     }
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             wagonUiState = wagonsRepository.getWagonStream(wagonId)
                 .filterNotNull()
                 .first()

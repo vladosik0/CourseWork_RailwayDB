@@ -61,7 +61,7 @@ class RouteStationEditViewModel(
     }
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             routeStationUiState = routeStationsRepository.getRouteStationStream(routeStationId)
                 .filterNotNull()
                 .first()

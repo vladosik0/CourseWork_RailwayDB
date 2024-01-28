@@ -12,7 +12,6 @@ import com.example.coursework.ui.state.isValid
 import com.example.coursework.ui.state.toStation
 import com.example.coursework.ui.state.toStationUiState
 import com.example.coursework.ui.station.screens.StationEditDestination
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -30,16 +29,18 @@ class StationEditViewModel(
 
     private val stationId: Int = checkNotNull(savedStateHandle[StationEditDestination.stationIdArg])
 
-    fun updateUiState(newStationUiState: StationUiState){
+    fun updateUiState(newStationUiState: StationUiState) {
         stationUiState = newStationUiState.copy(actionEnabled = newStationUiState.isValid())
     }
-    suspend fun updateStation(){
-        if(stationUiState.isValid()){
+
+    suspend fun updateStation() {
+        if (stationUiState.isValid()) {
             stationsRepository.updateStation(stationUiState.toStation())
         }
     }
-    init{
-        viewModelScope.launch(Dispatchers.IO) {
+
+    init {
+        viewModelScope.launch {
             stationUiState = stationsRepository.getStationStream(stationId)
                 .filterNotNull()
                 .first()

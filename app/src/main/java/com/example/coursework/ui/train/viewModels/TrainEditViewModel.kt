@@ -50,7 +50,7 @@ class TrainEditViewModel(
     }
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             trainUiState = trainsRepository.getTrainStream(trainId)
                 .filterNotNull()
                 .first()

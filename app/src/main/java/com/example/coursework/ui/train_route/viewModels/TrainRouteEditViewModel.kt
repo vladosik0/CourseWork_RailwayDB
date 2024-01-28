@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.coursework.data.repositories.TrainRoutesRepository
 import com.example.coursework.ui.state.*
 import com.example.coursework.ui.train_route.screens.TrainRouteEditDestination
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -25,18 +24,22 @@ class TrainRouteEditViewModel(
     var trainRouteUiState by mutableStateOf(TrainRouteUiState())
         private set
 
-    private val trainRouteId: Int = checkNotNull(savedStateHandle[TrainRouteEditDestination.trainRouteIdArg])
+    private val trainRouteId: Int =
+        checkNotNull(savedStateHandle[TrainRouteEditDestination.trainRouteIdArg])
 
-    fun updateUiState(newTrainRouteUiState: TrainRouteUiState){
-        trainRouteUiState = newTrainRouteUiState.copy(actionEnabled = newTrainRouteUiState.isValid())
+    fun updateUiState(newTrainRouteUiState: TrainRouteUiState) {
+        trainRouteUiState =
+            newTrainRouteUiState.copy(actionEnabled = newTrainRouteUiState.isValid())
     }
-    suspend fun updateTrainRoute(){
-        if(trainRouteUiState.isValid()){
+
+    suspend fun updateTrainRoute() {
+        if (trainRouteUiState.isValid()) {
             trainRoutesRepository.updateTrainRoute(trainRouteUiState.toTrainRoute())
         }
     }
-    init{
-        viewModelScope.launch(Dispatchers.IO) {
+
+    init {
+        viewModelScope.launch {
             trainRouteUiState = trainRoutesRepository.getTrainRouteStream(trainRouteId)
                 .filterNotNull()
                 .first()

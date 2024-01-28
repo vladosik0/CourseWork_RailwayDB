@@ -30,7 +30,7 @@ class SeatEditViewModel(
 
     private val seatId: Int = checkNotNull(savedStateHandle[SeatEditDestination.seatIdArg])
 
-    fun updateUiState(newSeatUiState: SeatUiState){
+    fun updateUiState(newSeatUiState: SeatUiState) {
         seatUiState = newSeatUiState.copy(actionEnabled = newSeatUiState.isValid())
     }
 
@@ -50,7 +50,7 @@ class SeatEditViewModel(
     }
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             seatUiState = seatsRepository.getSeatStream(seatId)
                 .filterNotNull()
                 .first()

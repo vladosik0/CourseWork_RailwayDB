@@ -66,7 +66,7 @@ class TicketEditViewModel(
     }
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             ticketUiState = ticketsRepository.getTicketStream(ticketId)
                 .filterNotNull()
                 .first()
