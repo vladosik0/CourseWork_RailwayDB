@@ -7,16 +7,19 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coursework.data.repositories.TicketsRepository
+import com.example.coursework.data.repositories.relationsRepositories.SeatWithTicketsRepository
 import com.example.coursework.ui.state.*
 import com.example.coursework.ui.ticket.screens.TicketEditDestination
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class TicketEditViewModel(
     savedStateHandle: SavedStateHandle,
-    private val ticketsRepository: TicketsRepository
+    private val ticketsRepository: TicketsRepository,
+    private val seatWithTicketsRepository: SeatWithTicketsRepository
 ) : ViewModel() {
 
     /**
@@ -27,15 +30,26 @@ class TicketEditViewModel(
 
     private val ticketId: Int = checkNotNull(savedStateHandle[TicketEditDestination.ticketIdArg])
 
-    fun updateUiState(newTicketUiState: TicketUiState){
+    fun updateUiState(newTicketUiState: TicketUiState) {
         ticketUiState = newTicketUiState.copy(actionEnabled = newTicketUiState.isValid())
     }
-    suspend fun updateTicket(){
-        if(ticketUiState.isValid()){
-            ticketsRepository.updateTicket(ticketUiState.toTicket())
+
+    suspend fun updateTicket(): String {
+        val message = viewModelScope.async(Dispatchers.IO) {
+            val seatWithTicketsList = seatWithTicketsRepository.getSeatsAndTickets()
+            if (
+                !seatWithTicketsList.any { it.seat.id == ticketUiState.seatId.toInt() }
+            ) {
+                "Seat with this Id doesn't exist!"
+            } else {
+                ticketsRepository.insertTicket(ticketUiState.toTicket())
+                "Row updated successfully."
+            }
         }
+        return message.await()
     }
-    init{
+
+    init {
         viewModelScope.launch(Dispatchers.IO) {
             ticketUiState = ticketsRepository.getTicketStream(ticketId)
                 .filterNotNull()
