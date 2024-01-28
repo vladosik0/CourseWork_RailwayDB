@@ -38,14 +38,10 @@ class SeatInputViewModel(
             ) {
                 "Wagon with this Id doesn't exist!"
             } else {
-                saveSeat()
+                seatsRepository.insertSeat(seatUiState.toSeat())
                 "Row added successfully."
             }
         }
         return message.await()
-    }
-
-    private suspend fun saveSeat() {
-        seatsRepository.insertSeat(seatUiState.toSeat())
     }
 }

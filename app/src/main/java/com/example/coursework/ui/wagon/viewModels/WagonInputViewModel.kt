@@ -38,14 +38,10 @@ class WagonInputViewModel(
             ) {
                 "Train with this Id doesn't exist!"
             } else {
-                saveWagon()
+                wagonsRepository.insertWagon(wagonUiState.toWagon())
                 "Row added successfully."
             }
         }
         return message.await()
-    }
-
-    private suspend fun saveWagon() {
-        wagonsRepository.insertWagon(wagonUiState.toWagon())
     }
 }

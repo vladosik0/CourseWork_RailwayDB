@@ -38,15 +38,10 @@ class TrainInputViewModel(
             ) {
                 "Route with this Id doesn't exist!"
             } else {
-                saveTrain()
+                trainsRepository.insertTrain(trainUiState.toTrain())
                 "Row added successfully."
             }
         }
         return message.await()
-    }
-
-    private suspend fun saveTrain() {
-        trainsRepository.insertTrain(trainUiState.toTrain())
-
     }
 }

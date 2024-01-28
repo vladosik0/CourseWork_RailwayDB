@@ -50,14 +50,10 @@ class RouteStationInputViewModel(
             ) {
                 "Station with this Id doesn't exist!"
             } else {
-                saveRouteStation()
+                routeStationsRepository.insertRouteStation(routeStationUiState.toRouteStation())
                 "Row added successfully."
             }
         }
         return message.await()
-    }
-
-    private suspend fun saveRouteStation() {
-        routeStationsRepository.insertRouteStation(routeStationUiState.toRouteStation())
     }
 }
