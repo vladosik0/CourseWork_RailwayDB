@@ -3,6 +3,7 @@ package com.example.coursework.data
 import android.content.Context
 import com.example.coursework.data.repositories.*
 import com.example.coursework.data.repositories.offlineRepositories.*
+import com.example.coursework.data.repositories.relationsRepositories.EndRouteStationWithTicketsRepository
 import com.example.coursework.data.repositories.relationsRepositories.RouteWithRouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.RouteWithTrainsRepository
 import com.example.coursework.data.repositories.relationsRepositories.SeatWithTicketsRepository
@@ -10,6 +11,7 @@ import com.example.coursework.data.repositories.relationsRepositories.StartRoute
 import com.example.coursework.data.repositories.relationsRepositories.StationWithRouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.TrainWithWagonsRepository
 import com.example.coursework.data.repositories.relationsRepositories.WagonWithSeatsRepository
+import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineEndRouteStationWithTicketsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineRouteWithRouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineRouteWithTrainsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineSeatWithTicketsRepository
@@ -36,6 +38,8 @@ interface AppContainer {
     val trainWithWagonsRepository: TrainWithWagonsRepository
     val seatWithTicketsRepository: SeatWithTicketsRepository
     val startRouteStationWithTicketsRepository: StartRouteStationWithTicketsRepository
+    val endRouteStationWithTicketsRepository: EndRouteStationWithTicketsRepository
+
 }
 
 /**
@@ -108,4 +112,11 @@ class AppDataContainer(private val context: Context) : AppContainer {
             RailwayDatabase.getDatabase(context).startRouteStationWithTicketsDao()
         )
     }
+
+    override val endRouteStationWithTicketsRepository: EndRouteStationWithTicketsRepository by lazy {
+        OfflineEndRouteStationWithTicketsRepository(
+            RailwayDatabase.getDatabase(context).endRouteStationWithTicketsDao()
+        )
+    }
+
 }
