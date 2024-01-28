@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coursework.data.repositories.TicketsRepository
+import com.example.coursework.data.repositories.relationsRepositories.EndRouteStationWithTicketsRepository
 import com.example.coursework.data.repositories.relationsRepositories.SeatWithTicketsRepository
 import com.example.coursework.data.repositories.relationsRepositories.StartRouteStationWithTicketsRepository
 import com.example.coursework.ui.state.TicketUiState
@@ -17,7 +18,8 @@ import kotlinx.coroutines.async
 class TicketInputViewModel(
     private val ticketsRepository: TicketsRepository,
     private val seatWithTicketsRepository: SeatWithTicketsRepository,
-    private val startRouteStationWithTicketsRepository: StartRouteStationWithTicketsRepository
+    private val startRouteStationWithTicketsRepository: StartRouteStationWithTicketsRepository,
+    private val endRouteStationWithTicketsRepository: EndRouteStationWithTicketsRepository
 ) : ViewModel() {
 
     /**
@@ -39,6 +41,8 @@ class TicketInputViewModel(
             val seatWithTicketsList = seatWithTicketsRepository.getSeatsAndTickets()
             val startRouteStationWithTicketsList =
                 startRouteStationWithTicketsRepository.getStartRouteStationsAndTickets()
+            val endRouteStationWithTicketsList =
+                endRouteStationWithTicketsRepository.getEndRouteStationsAndTickets()
             if (
                 !seatWithTicketsList.any { it.seat.id == ticketUiState.seatId.toInt() }
             ) {
@@ -47,6 +51,10 @@ class TicketInputViewModel(
                 !startRouteStationWithTicketsList.any { it.startStation.id == ticketUiState.startStationId.toInt() }
             ) {
                 "Start station with this Id doesn't exist!"
+            } else if (
+                !endRouteStationWithTicketsList.any { it.endStation.id == ticketUiState.endStationId.toInt() }
+            ) {
+                "End station with this Id doesn't exist!"
             } else {
                 ticketsRepository.insertTicket(ticketUiState.toTicket())
                 "Row added successfully."
