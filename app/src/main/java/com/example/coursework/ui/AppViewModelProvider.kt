@@ -31,7 +31,8 @@ object AppViewModelProvider {
             TicketEditViewModel(
                 this.createSavedStateHandle(),
                 railwayApplication().container.ticketsRepository,
-                railwayApplication().container.seatWithTicketsRepository
+                railwayApplication().container.seatWithTicketsRepository,
+                railwayApplication().container.startRouteStationWithTicketsRepository
             )
         }
         // Initializer for RouteStationEditViewModel
@@ -83,7 +84,8 @@ object AppViewModelProvider {
         initializer {
             TicketInputViewModel(
                 railwayApplication().container.ticketsRepository,
-                railwayApplication().container.seatWithTicketsRepository
+                railwayApplication().container.seatWithTicketsRepository,
+                railwayApplication().container.startRouteStationWithTicketsRepository
             )
         }
         // Initializer for RouteStationInputViewModel
