@@ -5,11 +5,13 @@ import com.example.coursework.data.repositories.*
 import com.example.coursework.data.repositories.offlineRepositories.*
 import com.example.coursework.data.repositories.relationsRepositories.RouteWithRouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.RouteWithTrainsRepository
+import com.example.coursework.data.repositories.relationsRepositories.SeatWithTicketsRepository
 import com.example.coursework.data.repositories.relationsRepositories.StationWithRouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.TrainWithWagonsRepository
 import com.example.coursework.data.repositories.relationsRepositories.WagonWithSeatsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineRouteWithRouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineRouteWithTrainsRepository
+import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineSeatWithTicketsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineStationWithRouteStationsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineTrainWithWagonsRepository
 import com.example.coursework.data.repositories.relationsRepositories.offlineRelationsRepositories.OfflineWagonWithSeatsRepository
@@ -30,6 +32,7 @@ interface AppContainer {
     val routeWithTrainsRepository: RouteWithTrainsRepository
     val wagonWithSeatsRepository: WagonWithSeatsRepository
     val trainWithWagonsRepository: TrainWithWagonsRepository
+    val seatWithTicketsRepository: SeatWithTicketsRepository
 }
 
 /**
@@ -88,6 +91,12 @@ class AppDataContainer(private val context: Context) : AppContainer {
     override val trainWithWagonsRepository: TrainWithWagonsRepository by lazy {
         OfflineTrainWithWagonsRepository(
             RailwayDatabase.getDatabase(context).trainWithWagonsDao()
+        )
+    }
+
+    override val seatWithTicketsRepository: SeatWithTicketsRepository by lazy {
+        OfflineSeatWithTicketsRepository(
+            RailwayDatabase.getDatabase(context).seatWithTicketsDao()
         )
     }
 }
