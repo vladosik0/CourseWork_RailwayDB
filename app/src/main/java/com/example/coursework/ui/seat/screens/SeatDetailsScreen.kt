@@ -1,5 +1,6 @@
 package com.example.coursework.ui.seat.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -15,6 +16,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -42,6 +44,7 @@ fun SeatDetailsScreen(
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             CourseWorkTopAppBar(
@@ -66,8 +69,11 @@ fun SeatDetailsScreen(
             seatUiState = uiState.value,
             onDelete = {
                 coroutineScope.launch {
-                    viewModel.deleteSeat()
-                    navigateBack()
+                    val toastMessage = viewModel.validateSeatDeletion()
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+                    if (toastMessage == "Row deleted successfully.") {
+                        navigateBack()
+                    }
                 }
             },
             modifier = modifier.padding(innerPadding)
