@@ -7,7 +7,7 @@ data class TrainUiState(
     val trainNumber: String = "",
     val routeId: String = "",
     val departureDate: String = "",
-    val arrivalDate: String="",
+    val arrivalDate: String = "",
     val actionEnabled: Boolean = false
 )
 
@@ -28,6 +28,7 @@ fun Train.toTrainUiState(actionEnabled: Boolean = false): TrainUiState = TrainUi
     actionEnabled = actionEnabled
 )
 
-fun TrainUiState.isValid() : Boolean{
+fun TrainUiState.isValid(): Boolean {
     return trainNumber.isNotBlank() && departureDate.isNotBlank() && arrivalDate.isNotBlank()
+            && departureDate != arrivalDate
 }
