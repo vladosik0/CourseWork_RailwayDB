@@ -1,5 +1,6 @@
 package com.example.coursework.ui.train.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -15,6 +16,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -42,6 +44,7 @@ fun TrainDetailsScreen(
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             CourseWorkTopAppBar(
@@ -66,8 +69,11 @@ fun TrainDetailsScreen(
             trainUiState = uiState.value,
             onDelete = {
                 coroutineScope.launch {
-                    viewModel.deleteTrain()
-                    navigateBack()
+                    val toastMessage = viewModel.validateTrainDeletion()
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show()
+                    if (toastMessage == "Row deleted successfully.") {
+                        navigateBack()
+                    }
                 }
             },
             modifier = modifier.padding(innerPadding)
