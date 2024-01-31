@@ -169,7 +169,8 @@ object AppViewModelProvider {
         initializer {
             WagonDetailsViewModel(
                 createSavedStateHandle(),
-                railwayApplication().container.wagonsRepository
+                railwayApplication().container.wagonsRepository,
+                railwayApplication().container.wagonWithSeatsRepository
             )
         }
         // Initializer for TrainDetailsViewModel
