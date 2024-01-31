@@ -34,7 +34,8 @@ class StationDetailsViewModel(
 
     suspend fun validateStationDeletion(): String {
         val message = viewModelScope.async(Dispatchers.IO) {
-            val stationWithRouteStationsList = stationWithRouteStationsRepository.getStationAndRouteStations()
+            val stationWithRouteStationsList =
+                stationWithRouteStationsRepository.getStationAndRouteStations()
             if (stationWithRouteStationsList.any { uiState.value.id == it.station.id && it.routeStations.isNotEmpty() }) {
                 "This station can't be deleted because it's used in existing route station(-s)."
             } else {
