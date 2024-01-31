@@ -33,6 +33,6 @@ fun Ticket.toTicketUiState(actionEnabled: Boolean = false): TicketUiState = Tick
 
 fun TicketUiState.isValid() : Boolean{
     return price.isNotBlank() && startStationId.isNotBlank() && endStationId.isNotBlank()
-            && seatId.isNotBlank()
+            && seatId.isNotBlank() && startStationId != endStationId
 }
 
