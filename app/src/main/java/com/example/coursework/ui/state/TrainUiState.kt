@@ -29,6 +29,6 @@ fun Train.toTrainUiState(actionEnabled: Boolean = false): TrainUiState = TrainUi
 )
 
 fun TrainUiState.isValid(): Boolean {
-    return trainNumber.isNotBlank() && departureDate.isNotBlank() && arrivalDate.isNotBlank()
+    return trainNumber.isNotBlank() && routeId.isNotBlank()
             && departureDate != arrivalDate
 }
